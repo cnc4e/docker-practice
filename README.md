@@ -57,6 +57,8 @@ Dockerおよびdocker-composeをインストールしてありDocker Hubに接�
 - [サービスのヘルスチェック](./swarm-biginner/swarm-service-healthcheck.md)
 - [サービスの環境変数](./swarm-biginner/swarm-service-env.md)
 
+他にもサービスには色々な設定があります。全量は[こちら](https://docs.docker.com/compose/compose-file/compose-file-v3/)のDockerドキュメントを参照ください。
+
 ## Swarm中級
 
 サービス以外のリソースついて扱います。
