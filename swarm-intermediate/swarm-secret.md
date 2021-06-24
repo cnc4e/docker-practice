@@ -17,7 +17,7 @@ echo koreha config no data desu > config
 echo koreha secret no data desu > secret
 ```
 
-2. 以下満たすcomposeファイル`secret-file.yaml`を作成してください。
+2. 以下満たすcomposeファイル`secret-file.yaml`を作成してください。（[ヒント](https://docs.docker.com/compose/compose-file/compose-file-v3/#secrets)）
 
 - service名: service
   - image: nginx
