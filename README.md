@@ -45,20 +45,31 @@ Dockerおよびdocker-composeをインストールしてありDocker Hubに接�
 - [dockerデーモンの設定](http://docs.docker.jp/engine/reference/commandline/daemon.html)
 
 ## Swarm初級
+
+主にサービスの設定について扱います。
+
 - [Swarmクラスタの構築](./swarm-biginner/swarm-create.md)
 - [サービスの作成](./swarm-biginner/swarm-service.md)
 - [サービスの配置](./swarm-biginner/swarm-service-placement.md)
 - [サービスのリソース指定](./swarm-biginner/swarm-service-resouces.md)
 - [サービスのボリュームマウント](./swarm-biginner/swarm-service-volume.md)
 - [サービスの外部公開](./swarm-biginner/swarm-service-expose.md)
+- [サービスのヘルスチェック](./swarm-biginner/swarm-service-healthcheck.md)
+- [サービスの環境変数](./swarm-biginner/swarm-service-env.md)
 
 ## Swarm中級
+
+サービス以外のリソースついて扱います。
+
 - [ネットワーク](./swarm-intermediate/swarm-network.md)
 - [コンフィグの使用](./swarm-intermediate/swarm-config.md)
 - [シークレットの使用](./swarm-intermediate/swarm-secret.md)
 - [ボリューム](./swarm-intermediate/swarm-valume.md)
 
 ## Swarm上級
+
+Docker以外のソフトウェアも扱います。
+
 - [ログ]
 - [監視]
 - [可用性]
