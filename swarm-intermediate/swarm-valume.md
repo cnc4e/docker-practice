@@ -8,15 +8,15 @@
 
 # ボリュームの使用
 
-コンテナの外部にデータを保管する方法として、`volumeマウント`と`bindマウント`の2つがあります。`volumeマウント`はボリュームドライバとDockerが連携することで専用のボリュームを切り出し、そのボリュームをタスクにマウントさせる方法です。`bindマウント`はあらかじめノードにマウント対象のパスを作成する必要がありますが、`volumeマウント`ではその必要はありません。ノード数が大量にあり、マウントするボリュームの数も多い場合はbindマウントよりもvolumeマウントの方が楽に管理できるでしょう。（[ネタ元](https://docs.docker.com/storage/volumes/)）
+コンテナの外部にデータを保管する方法として、`volumeマウント`と`bindマウント`の2つがあります。`volumeマウント`はボリュームプラグインとDockerが連携することで専用のボリュームを切り出し、そのボリュームをタスクにマウントさせる方法です。`bindマウント`はあらかじめノードにマウント対象のパスを作成する必要がありますが、`volumeマウント`ではその必要はありません。ノード数が大量にあり、マウントするボリュームの数も多い場合はbindマウントよりもvolumeマウントの方が楽に管理できるでしょう。（[ネタ元](https://docs.docker.com/storage/volumes/)）
 
-ボリュームプラグインはさまざまなものが提供されている。一覧は[こちら](https://docs.docker.com/engine/extend/legacy_plugins/#volume-plugins)を参照。
+ボリュームプラグインはさまざまなものが提供されています。一覧は[こちら](https://docs.docker.com/engine/extend/legacy_plugins/#volume-plugins)を参照してください。
 
-本プラクティスはプラグインとして[Netshare plugin](http://netshare.containx.io/)を使用し、Amazon EFSをvolumeマウントする。（Netshare pluginはEFSでなくてもNFSなら使えるんだと思う。）
+本プラクティスはプラグインとして[Netshare plugin](http://netshare.containx.io/)を使用し、Amazon EFSをvolumeマウントします。（Netshare pluginはEFSでなくてもNFSなら使えるんだと思う。）
 
 ## プラグインの準備
 
-1. ワーカーノードと同じVPCにEFSを構築してください。また、EFSのSGにはワーカーノードからのインバウンドアクセスを許可したルールを設定してください。作成したEFSのIPアドレス(例：10.0.1.249)を控えておいてください。
+1. ワーカーノードと同じVPCにEFSを構築してください。また、EFSのSGにはワーカーノードからのインバウンドアクセスを許可したルールを設定してください。作成したEFSのIPアドレスを控えておいてください。
 
 2. **すべてのワーカーノードで**[こちら](https://github.com/ContainX/docker-volume-netshare/releases)からワーカーノードの種類にあったバイナリをワーカーノードにダウンロードしてください。以下、コマンド例です。
 
@@ -32,7 +32,7 @@ mv docker-volume-netshare_0.36_linux_amd64/docker-volume-netshare /usr/local/sbi
 docker-volume-netshare -h
 ```
 
-4. **すべてのワーカーノードで**`docker-volume-netshare`をバックグランドで実行します。
+4. **すべてのワーカーノードで**`docker-volume-netshare`をバックグランドで実行します。ターミナルセッションは残しおきます。このあとの複数の手順でワーカーノードの操作が発生します。
 
 ``` sh
 docker-volume-netshare efs --noresolve　&
