@@ -128,9 +128,9 @@ uetgfd3snwmbtz8kt4chmejsp     ip-10-0-1-246.us-east-2.compute.internal   Ready  
 【コマンド】
 
 ``` sh
-docker node update --availability drain ip-10-0-1-157.us-east-2.compute.internal
-docker node update --availability drain ip-10-0-1-229.us-east-2.compute.internal
-docker node update --availability drain ip-10-0-1-246.us-east-2.compute.internal
+docker node update --availability drain <manager0 hostname>
+docker node update --availability drain <manager1 hostname>
+docker node update --availability drain <manager2 hostname>
 ```
 
 上記実行後ノードを確認します。マネージャノードの`AVAILABILITY`が`Drain`になっていれば良いです。`Drain`は新たにタスク(コンテナ)が割り当てられない状態になります。（[ネタ元](https://docs.docker.com/engine/swarm/swarm-tutorial/drain-node/)）
