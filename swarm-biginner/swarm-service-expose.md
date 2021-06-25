@@ -13,7 +13,7 @@
 - service名: test
 - image: nginx
 - replicas: 1
-- port: ホストの8000をコンテナの80にマッピング
+- port: ホストの8000をコンテナの80にマッピング（Long syntaxで設定する場合モードはingress）
 
 2. 上記作成したcomposeファイルを指定し、スタック`test`を作成してください。
 
