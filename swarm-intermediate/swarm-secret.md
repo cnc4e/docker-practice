@@ -52,6 +52,9 @@ docker exec <container id> cat /test-config
 
 8. スタック`test`を削除してください。
 
+Secretを作成するときの元データには注意が必要です。たとえば上記手順だと`secret`というファイルに機密情報を記載しています。Docker内に保存されれば暗号化されますが、Secretを作成するときの元データはそのまま残ります。
+
+
 ---
 
 [TOP](../README.md)   
