@@ -56,7 +56,7 @@ Swarmクラスタを構築する手順を解説します。手順を始める前
 このオーバーレイネットワークのアドレス帯には注意が必要です。もし既設ネットワークのアドレス帯と重複している場合、ネットワークの疎通が正しくできなくなるかもしれません。これを回避するには重複しないアドレス帯を指定することです。アドレス帯の指定はinit時のオプションで`--default-addr-pool`を指定して行います。オーバーレイネットワークを新たに作成するとそのアドレス帯からデフォルトでは`/24`のサブネットを切り出し、オーバーレイネットワークに割り当てられます。このサブネットの大きさはinitオプションの`--default-addr-pool-mask-len`で指定できます。（[ネタ元](https://docs.docker.com/engine/swarm/swarm-mode/#configuring-default-address-pools)）  
 長くなりましたが大事なのは`10.0.0.0/8`が既設ネットワークと重複するかどうかです。重複する場合はinitオプションで`--default-addr-pool`のアドレス帯を変更しましょう。
 
-以下コマンドでSwarmクラスタを構成します。アドレスプールを`172.16.0.0/16`に変更しています。`--advertise-addr`で指定するIPアドレスはmanager0のプライベートIPです。出力結果に出てくる`docker swarm join ~`のコマンドはコピーしておきます。後ほどワーカーを参加させるときに使います。
+以下コマンドでSwarmクラスタを構成します。アドレスプールを`172.16.0.0/16`に変更しています。`--advertise-addr`で指定するIPアドレスはmanager0のプライベートIPです。出力結果に出てくる`docker swarm join ~`のコマンドはコピーしておきます。後ほど**ワーカー**を参加させるときに使います。
 
 【コマンド】
 
@@ -76,7 +76,9 @@ To add a worker to this swarm, run the following command:
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
 
-続いて他のマネージャノードをクラスタに参加させるためのコマンドを生成します。出力結果に出てくる`docker swarm join ~`のコマンドはコピーしておきます。後ほど他のマネージャを参加させるときに使います。
+上記出力結果に出てくる`docker swarm join ~`のコマンドは**ワーカー参加用のコマンド**としてコピーしておきます。後ほど**ワーカー**を参加させるときに使います。
+
+続いて他のマネージャノードをクラスタに参加させるためのコマンドを生成します。出力結果に出てくる`docker swarm join ~`のコマンドはコピーしておきます。後ほど他の**マネージャ**を参加させるときに使います。
 
 【コマンド】
 
@@ -92,9 +94,11 @@ To add a manager to this swarm, run the following command:
     docker swarm join --token SWMTKN-1-37hea3dvmqp0u7iwrzob7kqbaqmx6am5vkznf9d0xy0ctd81sw-a8k2wo7ibizfpd4shum1vosz3 10.0.1.229:2377
 ```
 
+上記出力結果に出てくる`docker swarm join ~`のコマンドは**マネージャ参加用のコマンド**としてコピーしておきます。後ほど**マネージャ**を参加させるときに使います。
+
 ### マネージャ2,3台目
 
-manager1,manager2に接続してさきほどmanager0で生成したマネージャ参加コマンドをそのまま実行します。
+manager1,manager2に接続してさきほどmanager0で生成した**マネージャ参加用のコマンド**をそのまま実行します。
 
 【コマンド】
 
@@ -152,7 +156,7 @@ uetgfd3snwmbtz8kt4chmejsp     ip-10-0-1-246.us-east-2.compute.internal   Ready  
 
 ### ワーカー
 
-worker0とworker1に接続し、manager0で`docker swarm init`したときの出力にあったコマンドを実行します。
+worker0とworker1に接続し、manager0で`docker swarm init`したときの出力にあった**ワーカー参加用のコマンド**を実行します。
 
 【コマンド】
 
