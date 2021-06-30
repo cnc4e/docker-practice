@@ -1,5 +1,5 @@
 [TOP](../README.md)   
-前: [サービスの外部公開](./swarm-service-expose.md)  
+前: [ネットワーク](./swarm-network.md)  
 次: [シークレットの使用](./swarm-secret.md)  
 
 ---
@@ -75,5 +75,5 @@ curl 127.0.0.1:8000
 ---
 
 [TOP](../README.md)   
-前: [サービスの外部公開](./swarm-service-expose.md)  
+前: [ネットワーク](./swarm-network.md)  
 次: [シークレットの使用](./swarm-secret.md)  
