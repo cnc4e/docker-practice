@@ -70,4 +70,6 @@ docker stack deploy -c log-test.yaml test
 docker stack ls
 docker stack services test
 docker stack ps test
+docker stack rm test
+docker stack rm fluentd
 ```
