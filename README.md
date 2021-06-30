@@ -72,7 +72,7 @@ Dockerおよびdocker-composeをインストールしてありDocker Hubに接�
 
 Docker以外のソフトウェアも扱います。
 
-- [ログ]
+- [ログ](./swarm-advanced/swarm-log.md)
 - [監視]
 - [可用性]
 - [バックアップ]
