@@ -99,7 +99,7 @@ Fluentdをデプロイします。まずはFluentdの設定ファイルを作成
   - ports: コンテナのtcp24224をホストの24224ポートで公開。モードはホストを指定
   - config: config:fluent.confを/fluentd/etc/fluent.confにマウント
 - config: fluent.conf
-  - source: [Fluent.confの準備](#fluentconfの準備)で作成したfluent.confを指定
+  - source: [Fluent.confの準備](#3-1-fluentconfの準備)で作成したfluent.confを指定
 
 > **globalで配置するのはなぜですか？**  
 > 実はreplicatedでも良いです。ですが、今回はやってないですがたとえばホストのsyslogなども収集することを考えるとすべてのworkerに配置した方が良いかなと思いました。
