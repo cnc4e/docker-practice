@@ -144,6 +144,10 @@ Fluentdをデプロイします。まずはFluentdの設定ファイルを作成
 > スタック`test`を消してからしばらく待ったのはなぜですか？
 > スタック`test`を消すときにコンテナのログが吐かれます。その時、Fluentdがないとログがバッファに溜まるようです。それで何か不具合が起こるとも思えませんが、一応ログを吐き切らせたからすべて削除するようにしたかったのです。
 
+このようにロギングドライバを指定するこで任意のツールを使ってログを飛ばすことができます。なお、本プラクティスではcomposeファイルでタスクごとにログ設定を記述しましたが、dockerデーモンに設定しておけばデフォルトで任意のロギングドライバを使ってくれるようになるでしょう。[ネタ元](https://docs.docker.com/config/containers/logging/configure/#configure-the-default-logging-driver)
+
+なお、デュアルロギングの場合もローカルにログは溜まるようです。デフォルトでローテーションが設定されているようです。[ネタ元](https://docs.docker.com/config/containers/logging/dual-logging/#configuration-options)
+
 ---
 
 [TOP](../README.md)   
