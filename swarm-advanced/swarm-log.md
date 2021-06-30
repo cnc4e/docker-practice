@@ -14,13 +14,13 @@
 
 今回はFluentdで収集したログをAWSのCloudWatch Logsに保管します。Fluentdには機能を拡張するプラグインが豊富に用意されています。CloudWatch Logsへログを保管する機能もプラグインとして用意されているためそれを使用します。
 
-## Fluentdイメージの準備
+## 1. Fluentdイメージの準備
 
 CloudWatch Logsへログを保管したいためプラグインをインストールしたコンテナイメージを用意します。すでにビルド済のイメージを`ryotamori/fluentd-cloudwatch:v1.9-1`で公開しています。（作成者のDocker Hubです。）
 
 以下、イメージをビルドした時の手順です。他のプラグインをインストールしたい場合やベースイメージを変えたい場合など参考にしてください。
 
-### ビルド手順
+### 1-1. ビルド手順
 
 CloudWatch Logsへログを保管するプラグインは[fluent-plugin-cloudwatch-logs](https://github.com/fluent-plugins-nursery/fluent-plugin-cloudwatch-logs)で公開されてます。
 
@@ -49,17 +49,17 @@ docker build -t ryotamori/fluentd-cloudwatch:v1.9-1 .
 docker push ryotamori/fluentd-cloudwatch:v1.9-1
 ```
 
-## インスタンスのIAMロール
+## 2. インスタンスのIAMロール
 
-DockerホストにCloudWatch Logsを操作するためのIAMポリシーをアタッチします。たとえば`CloudWatchLogsFullAccess`がついていれば十分です。
+DockerホストにCloudWatch Logsを操作するためのIAMポリシーをアタッチしてください。たとえば`CloudWatchLogsFullAccess`がついていれば十分です。
 
-## Fluentdのデプロイ
+## 3. Fluentdのデプロイ
 
-Fluentdをデプロイします。Fluentdはすべてのworkerに配置したいためglobalでデプロイします。また、各workerで動いているコンテナログの収集は同じworkerで動いているFluentdにやらせたいです。（わかりやすいかなと思ったのですが好みかもしれません。）　そのためFluentdタスクはホストモードでポート公開します。
+Fluentdをデプロイします。まずはFluentdの設定ファイルを作成します。続いて、Fluentdはすべてのworkerに配置したいためglobalでデプロイします。また、各workerで動いているコンテナログの収集は同じworkerで動いているFluentdにやらせたいです。（わかりやすいかなと思ったのですが好みかもしれません。）　そのためFluentdタスクはホストモードでポート公開します。
 
-### Fluent.confの準備
+### 3-1. Fluent.confの準備
 
-今回使用するFluentdのイメージではログ収集の設定を`/fluentd/etc/fluent.conf`に記述します。デフォルトのfluent.confにはCloudWatch Logsへ転送するための設定は記述されていないため修正したfluent.confを準備します。（後ほどの手順でconfigにしてタスクにマウントさせます。）
+今回使用するFluentdのイメージではログ収集の設定を`/fluentd/etc/fluent.conf`に記述します。デフォルトのfluent.confにはCloudWatch Logsへ転送するための設定は記述されていません。CloudWatch Logsへ転送する設定を記述したfluent.confを準備します。（後ほどの手順でconfigにしてコンテナにマウントさせます。）
 
 1. 以下内容の`fluent.conf`ファイルを作成してください。`<リージョン>`は自身の環境に合わせてください。
 
@@ -86,10 +86,10 @@ Fluentdをデプロイします。Fluentdはすべてのworkerに配置したい
 </label>
 ```
 
-上記ファイルの内容を少し解説します。`<source>ディレクティブ`ではport:24224でログを待ち受ける設定をしています。また、受け取ったログに`@mainstream`ラベルをつけています。`<label @mainstream>ディレクティブ`では`@mainstream`ラベルのついたログに関する処理を記述します。
-`<match docker.**>ディレクティブ`で`docker.`から始まるタグのついたログを出力する設定を記述しています。`@type cloudwatch_logs`はCloudWatch Logsプラグインの使用を宣言しています。それ以降はプラグインの設定です。プラグインの設定については[こちら](https://github.com/fluent-plugins-nursery/fluent-plugin-cloudwatch-logs#out_cloudwatch_logs)を参照ください。今回は`docker-practice`というロググループ以下に`docker.**`のタグごとにログストリームを作成する設定をしています。（コンテナログに対するタグ付けの設定は後ほどcomposeファイルの中で指定します。）
+上記ファイルの内容を少し解説します。`<source>`ディレクティブではport:24224でログを待ち受ける設定をしています。また、受け取ったログに`@mainstream`ラベルをつけています。`<label @mainstream>`ディレクティブでは`@mainstream`ラベルのついたログに関する処理を記述します。
+`<match docker.**>`ディレクティブで`docker.`から始まるタグのついたログを出力する設定を記述しています。`@type cloudwatch_logs`はCloudWatch Logsプラグインの使用を宣言しています。それ以降はプラグインの設定です。プラグインの設定については[こちら](https://github.com/fluent-plugins-nursery/fluent-plugin-cloudwatch-logs#out_cloudwatch_logs)を参照ください。今回は`docker-practice`というロググループ以下に`docker.**`のタグごとにログストリームを作成する設定をしています。（コンテナログに対するタグ付けの設定は後ほどcomposeファイルの中で指定します。）
 
-### Fluentdのデプロイ
+### 3-2. Fluentdのデプロイ
 
 1. 以下満たすcomposeファイル`fluentd.yaml`を作成してください。
 
@@ -101,11 +101,11 @@ Fluentdをデプロイします。Fluentdはすべてのworkerに配置したい
 - config: fluent.conf
   - source: [Fluent.confの準備](#fluentconfの準備)で作成したfluent.confを指定
 
->> globalで配置するのはなぜですか？
->> 実はreplicatedでも良いです。ですが、今回はやってないですがたとえばホストのsyslogなども収集することを考えるとすべてのworkerに配置した方が良いかなと思いました。
+> globalで配置するのはなぜですか？  
+> 実はreplicatedでも良いです。ですが、今回はやってないですがたとえばホストのsyslogなども収集することを考えるとすべてのworkerに配置した方が良いかなと思いました。
 
->> ホストモードで公開するのはなぜですか？
->> 実は通常のovaerlayネットワークでもよいです。しかし、そうするとコンテナのログが同じworkerノードで動いているFluetndに送らえるとは限りません。別ノードで起動しているFluentdに転送される可能性があります。最終的にCloudWatch Logsに格納するので気にしなくても良い気もします。ですが、たとえばFluentd内のファイルに吐かせる場合、違うノードで動いているコンテナのログがあるのは少し奇妙に思えるかもしれません。
+> ホストモードで公開するのはなぜですか？  
+> 実は通常のovaerlayネットワークでもよいです。しかし、そうするとコンテナのログが同じworkerノードで動いているFluetndに送らえるとは限りません。別ノードで起動しているFluentdに転送される可能性があります。最終的にCloudWatch Logsに格納するので気にしなくても良い気もします。ですが、たとえばFluentd内のファイルに吐かせる場合、違うノードで動いているコンテナのログがあるのは少し奇妙に思えるかもしれません。
 
 2. 上記作成したcomposeファイルを指定し、スタック`fluentd`を作成してください。
 
@@ -113,11 +113,11 @@ Fluentdをデプロイします。Fluentdはすべてのworkerに配置したい
 
 4. コンフィグの一覧を表示してください。fluent_fluent.confが作成されていることを確認してください。
 
-5. **いずれかのworkerノードで実施** ノード動いているFluentdコンテナのログを表示してください。起動時に使用したfluent.confの内容が表示されます。修正したfluent.confの内容でFluentdが起動していることを確認してください。
+5. **いずれかのworkerノードで実施** Fluentdコンテナのログを表示してください。起動時に使用したfluent.confの内容が表示されます。修正したfluent.confの内容でFluentdが起動していることを確認してください。
 
 なお、修正済のfluent.confを含めてイメージをビルドする手もあります。しかし、それだとfluent.confを修正するたびにイメージをビルドしなおし、composeファイルのタグを書き換える必要もありとても手間です。fluent.confのように後から設定を見直す可能性のある設定ファイルは本プラクティスでやっているようにconfigにした方が楽です。
 
-## テスト用アプリケーションのデプロイ
+## 4. テスト用アプリケーションのデプロイ
 
 テスト用のアプリケーションをデプロイし、ログがFluentdで収集されCloudWatch Logsに保存されることを確認します。
 
@@ -141,8 +141,8 @@ Fluentdをデプロイします。Fluentdはすべてのworkerに配置したい
 
 7. AWSに作成したロググループおよびログストリームも削除してください。
 
->> スタック`test`を消してからしばらく待ったのはなぜですか？
->> スタック`test`を消すときにコンテナのログが吐かれます。その時、Fluentdがないとログがバッファに溜まるようです。それで何か不具合が起こるとも思えませんが、一応ログを吐き切らせたからすべて削除するようにしたかったのです。
+> スタック`test`を消してからしばらく待ったのはなぜですか？
+> スタック`test`を消すときにコンテナのログが吐かれます。その時、Fluentdがないとログがバッファに溜まるようです。それで何か不具合が起こるとも思えませんが、一応ログを吐き切らせたからすべて削除するようにしたかったのです。
 
 ---
 
