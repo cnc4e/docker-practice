@@ -53,7 +53,7 @@ echo config no naiyou wo kakikaetayo > index.html
   - replicas: 1
   - configs: `index2`を/usr/share/nginx/html/index.htmlにマウント
   - port: ホストの8000をコンテナの80にマッピング
-- config名: `index2` (index1を2に書き換え)
+- config名: `index2` (indexに2を追加)
   - file: ./index.html
 
 9. 上記作成したcomposeファイルを指定し、スタック`test`をアップデートしてください。なお、スタックを作成するときはカレントディレクトリにindex.htmlがあることを確認してください。
