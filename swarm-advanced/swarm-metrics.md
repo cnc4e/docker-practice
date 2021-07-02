@@ -130,10 +130,10 @@ a69e29d5aba6   zabbix/zabbix-proxy-mysql:centos-5.4-latest        "/sbin/tini --
 
 - service: dockbix-agent
   - image: monitoringartist/dockbix-agent-xxl-limited:latest
-  - 特権モードを有効
+  - 特権モード(privileged): 有効
   - deploy: global
   - volumes: /を/rootfs、/var/runを/var/runにマウント
-  - environment: ZA_ServerとZA_ServerActiveにZabbixサーバーをインストールしたIPアドレスで設定
+  - environment: ZA_ServerとZA_ServerActiveにZabbixサーバーをインストールしたIPアドレスを設定
   - networks: hostnetに所属
 - networks: hostnet
   - すでにあるhostという名前のネットワークを指定
