@@ -35,7 +35,7 @@ docker-volume-netshare -h
 4. **すべてのワーカーノードで**`docker-volume-netshare`をバックグランドで実行します。ターミナルセッションは残しおきます。このあとの複数の手順でワーカーノードの操作が発生します。
 
 ``` sh
-docker-volume-netshare efs --noresolve　&
+docker-volume-netshare efs --noresolve &
 ```
 
 ## volumeマウントの実践
