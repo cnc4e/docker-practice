@@ -126,7 +126,7 @@ a69e29d5aba6   zabbix/zabbix-proxy-mysql:centos-5.4-latest        "/sbin/tini --
 
 ## 3. workerへagentの配布
 
-1. 以下満たすcomposeファイル`dockbix-agent.yaml`を作成してください。（(ヒント①)[https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir]、(ヒント②)[https://docs.docker.com/compose/compose-file/compose-file-v3/#host-or-none]）
+1. 以下満たすcomposeファイル`dockbix-agent.yaml`を作成してください。（[ヒント①](https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir)、[ヒント②](https://docs.docker.com/compose/compose-file/compose-file-v3/#host-or-none)）
 
 - service: dockbix-agent
   - image: monitoringartist/dockbix-agent-xxl-limited:latest
