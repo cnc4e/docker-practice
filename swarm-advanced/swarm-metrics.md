@@ -162,6 +162,8 @@ docker-compose down
 
 3. gitクローンした`zabbix-docker`ディレクトリを削除してください。
 
+このプラクティスの解答例は[こちら](./.ans/swarm-metrics.md)
+
 ---
 
 [TOP](../README.md)   

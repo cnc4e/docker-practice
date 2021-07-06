@@ -59,6 +59,8 @@ echo worker1 > /tmp/mount/test.txt
 
 （[tmpfs](https://docs.docker.com/storage/tmpfs/)についても触れる？これの使い所がよくわからない。）
 
+このプラクティスの解答例は[こちら](./.ans/swarm-service-volume.md)
+
 ---
 
 [TOP](../README.md)   
