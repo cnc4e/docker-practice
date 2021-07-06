@@ -153,7 +153,7 @@ docker exec <container id> curl -s <test_service3のnetwork3のIP> # NG
 
 以上のように、別のスタックで作成したネットワークにつなぐこともできます。（ただ、これをやってしまうと別のスタックに依存することとなるのであまり良くないかも。やるにしてもネットワーク作成用のスタックを作ってやるとかが良いのかな。）
 
-このプラクティスの解答例は[こちら](./.ans/swarm-network.md)
+*[解答例](./.ans/swarm-network.md)*
 
 ---
 

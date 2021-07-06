@@ -59,7 +59,7 @@ EOF
 
 6. スタック`test`を削除してください。
 
-このプラクティスの解答例は[こちら](./.ans/swarm-service-env.md)
+*[解答例](./.ans/swarm-service-env.md)*
 
 ---
 

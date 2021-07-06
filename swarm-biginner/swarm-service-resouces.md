@@ -38,7 +38,7 @@
 
 （今各ノードでどれくらいのHWリソースを予約済かとか見る方法がわからない。もしかして監視ツールとか入れないとできない？）
 
-このプラクティスの解答例は[こちら](./.ans/swarm-service-resouces.md)
+*[解答例](./.ans/swarm-service-resouces.md)*
 
 ---
 
