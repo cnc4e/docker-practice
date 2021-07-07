@@ -48,7 +48,7 @@ docker-volume-netshare efs --noresolve &
   - volumes: efsを/dataにマウント
 - volume名: efs
   - driver: local
-  - driver_opts: typeはlocal、アドレスでEFSのIPアドレスを指定
+  - driver_opts: typeはnfs、、nfsのバージョンは4を指定、アドレスでEFSのIPアドレスを指定
   - device: ":/"
 
 2. 上記作成したcomposeファイルを指定し、スタック`test`を作成してください。
