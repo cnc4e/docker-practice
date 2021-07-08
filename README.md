@@ -66,7 +66,7 @@ Dockerおよびdocker-composeをインストールしてありDocker Hubに接�
 - [ネットワーク](./swarm-intermediate/swarm-network.md)
 - [コンフィグの使用](./swarm-intermediate/swarm-config.md)
 - [シークレットの使用](./swarm-intermediate/swarm-secret.md)
-- [ボリューム](./swarm-intermediate/swarm-valume.md)
+- [ボリューム](./swarm-intermediate/swarm-volume.md)
 
 ## Swarm上級
 
