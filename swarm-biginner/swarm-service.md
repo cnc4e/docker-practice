@@ -56,23 +56,23 @@ services:
       replicas: 1
 ```
 
-1. `service`ディレクトリにて`docker stack deploy`コマンドで上記作成したcomposeファイルを指定したサービスのデプロイを行います。スタック名は`test`を指定します。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_deploy/)）
+3. `service`ディレクトリにて`docker stack deploy`コマンドで上記作成したcomposeファイルを指定したサービスのデプロイを行います。スタック名は`test`を指定します。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_deploy/)）
 
-2. スタックの一覧を表示し、`test`という名前のスタックがあることを確認してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_ls/)）
+4. スタックの一覧を表示し、`test`という名前のスタックがあることを確認してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_ls/)）
 
-3. スタック`test`に含まれるサービスの一覧を表示してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_services/)）
+5. スタック`test`に含まれるサービスの一覧を表示してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_services/)）
 
-4. スタック`test`に含まれるタスクの一覧を表示してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_ps/)）
+6. スタック`test`に含まれるタスクの一覧を表示してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_ps/)）
 
-5. `test.yaml`を修正しreplicasを3にしてください。
+7. `test.yaml`を修正しreplicasを3にしてください。
 
-6. `docker stack deploy`コマンドで再度スタックをデプロイしてください。（削除はしなくてもデプロイすれば上書きされます。）
+8. `docker stack deploy`コマンドで再度スタックをデプロイしてください。（削除はしなくてもデプロイすれば上書きされます。）
 
-7. スタック`test`に含まれるサービスとタスクを表示してください。タスク数が3に増えていることを確認してください。
+9. スタック`test`に含まれるサービスとタスクを表示してください。タスク数が3に増えていることを確認してください。
 
-8.  スタック`test`を削除してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_rm/)）
+10.  スタック`test`を削除してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/stack_rm/)）
 
-9.  スタックの一覧を表示し、スタック`test`が削除されていることを確認してください。
+11.  スタックの一覧を表示し、スタック`test`が削除されていることを確認してください。
 
 以上の通り、composeフィアルを使ってサービスをデプロイできます。`スタック`は複数のサービスをまとめたものです。docker-composeにおけるプロジェクトと同じようなものです。サービスの設定は多岐に渡るためコマンドでの管理は難しいです。そのため、本プラクティスではcomposeファイルに記述する前提で進めていきます。
 
