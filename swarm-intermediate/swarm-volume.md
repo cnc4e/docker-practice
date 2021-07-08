@@ -41,6 +41,7 @@ docker-volume-netshare efs --noresolve &
 ## volumeマウントの実践
 
 1. 以下満たすcomposeファイル`volume-mount.yaml`を作成してください。（[ヒント①](https://docs.docker.com/compose/compose-file/compose-file-v3/#volume-configuration-reference)、[ヒント②](https://www.it-swarm-ja.com/ja/docker/docker-compose-v3%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%A6%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%ABnfs%E5%85%B1%E6%9C%89%E3%83%9C%E3%83%AA%E3%83%A5%E3%83%BC%E3%83%A0%E3%82%92%E7%9B%B4%E6%8E%A5%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%88%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/833008956/)）
+`※volumeの設定を変更する場合、再deployしても変更が反映されません。一度 docker volume rm でvolumeを削除してから再deployしてください。`
 
 - service名: service
   - image: nginx

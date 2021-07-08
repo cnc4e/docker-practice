@@ -1,6 +1,6 @@
 [TOP](../README.md)   
 前: [コンフィグの使用](./swarm-config.md)  
-次: [ボリューム](./swarm-valume.md)  
+次: [ボリューム](./swarm-volume.md)  
 
 ---
 
@@ -59,4 +59,4 @@ Secretを作成するときの元データには注意が必要です。たと�
 
 [TOP](../README.md)   
 前: [コンフィグの使用](./swarm-config.md)  
-次: [ボリューム](./swarm-valume.md)  
+次: [ボリューム](./swarm-volume.md)  
