@@ -111,6 +111,7 @@ docker run --rm --net host --pid host --userns host --cap-add audit_control \
 [PASS] 1.9  - Ensure auditing is configured for Docker files and directories - docker.socket
 ```
 
+なお、上記のようにホストに対する対応は1台だけでなくすべてのノードに対して実行する必要があります。docker-bench-securityはすべてのノードで確認するようにしましょう。
 
 ## 4.　その他tips
 
