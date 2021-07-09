@@ -8,11 +8,11 @@
 
 コンテナにおいてもセキュリティは重要です。セキュリティに対策についていくつか記載します。
 
-## 1. overlayネットワークの暗号化
+## 1.　overlayネットワークの暗号化
 
-overlayネットワークはホスト間に跨る通信です。overlayネットワークは暗号化できます。（暗号化するとネットワークのパフォーマンスに影響があります。いきなり本番で使用する前にパフォーマンスの問題がないか確認しましょう。）
+overlayネットワークはホスト間に跨る通信です。overlayネットワークはデフォルトでは暗号化されませんが暗号化を有効にすることもできます。（暗号化するとネットワークのパフォーマンスに影響があります。いきなり本番で使用する前にパフォーマンスの問題がないか確認しましょう。）
 
-なお、overlayネットワークを暗号化するにはノード間でESP(ip protocol:50)の通信を許可する必要があるのであらかじめ設定しておいてください。[ネタ元](https://docs.docker.com/engine/swarm/swarm-tutorial/#open-protocols-and-ports-between-the-hosts)
+なお、overlayネットワークを暗号化するにはノード間でESP(ip protocol:50)の通信を許可する必要があるのであらかじめ設定しておいてください。（TCP/UDPの50番ではないので注意！）　[ネタ元](https://docs.docker.com/engine/swarm/swarm-tutorial/#open-protocols-and-ports-between-the-hosts)
 
 1. 以下満たすcomposeファイル`overlay-encrypted.yaml`を作成してください。
 
@@ -44,7 +44,7 @@ overlayネットワークはホスト間に跨る通信です。overlayネット
 
 ## 2. イメージの脆弱性診断
 
-コンテナイメージそのものに脆弱性が潜んでいる可能性があります。そのようなイメージを使うと攻撃される恐れがあるため脆弱性のない安全なイメージを使用しましょう。イメージに脆弱性が含まれているかは診断ツールを使って解析します。有名なもので[trivy](https://github.com/aquasecurity/trivy)というOSSのツールがあるためこれを使ってみましょう。
+コンテナイメージそのものに脆弱性が潜んでいる可能性があります。そのようなイメージを使うと攻撃される恐れがあるため脆弱性のない安全なイメージを使用しましょう。イメージに脆弱性が含まれているかは診断ツールを使って確認します。有名なもので[trivy](https://github.com/aquasecurity/trivy)というOSSのツールがあります。
 
 本プラクティスではdocker hubで公開されているオフィシャルのhttpdイメージを使用します。[こちら](https://hub.docker.com/_/httpd)です。オフィシャルのイメージはベースイメージとして信頼できるものです。Dockerとしてもオフィシャルイメージの利用を推奨しています。（[ネタ元](https://docs.docker.com/docker-hub/official_images/)）　ですが、オフィシャルイメージが完全に安全というわけではありません。
 
@@ -60,13 +60,13 @@ docker run --rm aquasec/trivy httpd:2.4.47
 docker run --rm aquasec/trivy httpd:2.4.47-alpine
 ```
 
-このようにしてイメージの脆弱性診断ツールを使用して脆弱性を確認できます。ベースイメージには脆弱性の少ないものを採用することでリスクを低減できます。また、自分たちでビルドしたイメージについても脆弱性を確認しましょう。すべての脆弱性に自分達で対応するのはとても大変ですが、最低限CRITICALやHIGHなど危険性の高いものは対応した方がよいでしょう。
+このようにイメージの脆弱性診断ツールを使用して脆弱性を確認できます。ベースイメージには脆弱性の少ないものを採用することでリスクを低減できます。また、自分たちでビルドしたイメージについても脆弱性を確認しましょう。すべての脆弱性に自分達で対応するのはとても大変ですが、最低限CRITICALやHIGHなど危険性の高いものは対応した方がよいでしょう。
 
-また、このような脆弱性診断をコンテナレジストリに任せることもできます。たとえばAWSのコンテナイメージレジストリサービスである[ECR](https://aws.amazon.com/jp/ecr/)はイメージプッシュ時に自動でスキャンを実行してくれます。
+また、このような脆弱性診断をコンテナレジストリに任せることもできます。たとえばAWSのコンテナレジストリサービスである[ECR](https://aws.amazon.com/jp/ecr/)はイメージプッシュ時に自動でスキャンを実行してくれます。
 
 ## 3. セキュリティ診断
 
-Docker環境のセキュリティベストプラクティスをまとめたものとして[CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker/)というものがります。リンクのサイトから無料で文章をダウンロードできます。（要登録）　また、この文章への対応状況を自動でチェックするツール[docker-bench-security](https://github.com/docker/docker-bench-security)をDockerが公開しています。このツールを使い、Docker環境の安全性を確認できます。
+Docker環境のセキュリティベストプラクティスをまとめたものとして[CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker/)というものがります。リンクのサイトから無料で文章をダウンロードできます。（要登録）　また、この文章への対応状況を自動でチェックする[docker-bench-security](https://github.com/docker/docker-bench-security)と言うツールをDockerが公開しています。このツールを使い、Docker環境の安全性を確認できます。
 
 1. 以下コマンドでdocker-bench-securityを実行してください。
 
@@ -97,7 +97,7 @@ docker run --rm --net host --pid host --userns host --cap-add audit_control \
 ...
 ```
 
-2. 各指標に対しての解決策はDocker Benchmarkの文章の中にヒントが書かれているのでそれらを参考にします。上記WARNへ自力で対処してみましょう。（解答例に私の環境で対処した時のやり方を書いておきます。）
+2. 上記WARNへ自力で対処してみましょう。各指標に対しての解決策はDocker Benchmarkの文章の中にヒントが書かれているのでそれらを参考にします。（解答例に私の環境で対処した時のやり方を書いておきます。）
 
 3. docker-bench-securityを再度実行してWARNだった指標がPASSになったことを確認してください。
 
@@ -112,7 +112,7 @@ docker run --rm --net host --pid host --userns host --cap-add audit_control \
 ```
 
 
-## 4.その他tips
+## 4.　その他tips
 
 以下、本プラクティスではとくに課題を用意していませんが一般的なセキュリティ関連のtipsを以下に記載します。
 
@@ -126,7 +126,7 @@ docker run --rm --net host --pid host --userns host --cap-add audit_control \
 - パスワードなどのシークレット情報はコンテナイメージ、composeファイルに埋め込まない
 - docker apiを外部に公開するときはTLSやSSHで保護する
 
-また、コンテナ環境のセキュリティ指針として有名なもので米国国立標準技術研究所（NIST）という団体が公開したSP800-190という文章があります。日本の情報処理推進機構（IPA）により日本語訳されたものが[こちら](https://www.ipa.go.jp/files/000085279.pdf)にありますのでより詳細に検討したい方は是非読んでみてください。
+また、コンテナ環境のセキュリティ指針として有名なもので米国国立標準技術研究所（NIST）という団体が公開したSP800-190という文章があります。それを日本語訳したものが日本の情報処理推進機構（IPA）により公開されています。[こちら](https://www.ipa.go.jp/files/000085279.pdf)です。ともて興味深い内容ですので本番環境でコンテナを運用する前には是非読んでみるよ良いでしょう。
 
 *[解答例](./.ans/swarm-security.md)*
 
