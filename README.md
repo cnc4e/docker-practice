@@ -74,5 +74,5 @@ Docker以外のソフトウェアも扱います。
 
 - [ログ](./swarm-advanced/swarm-log.md)
 - [監視](./swarm-advanced/swarm-metrics.md)
-- [セキュリティ](./swarm-advanced/.ans/swarm-security.md)
+- [セキュリティ](./swarm-advanced/swarm-security.md)
 - [バックアップ]
