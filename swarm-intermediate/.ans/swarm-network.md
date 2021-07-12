@@ -87,6 +87,7 @@ networks:
 
 EOF
 
+docker stack deploy -c network-create.yaml test
 docker stack ls
 docker stack services test
 docker stack ps test
@@ -132,5 +133,5 @@ docker stack ps test2
 docker network ls
 docker network inspect test2_common | grep Subnet
 docker service inspect test2_service1 |grep Addr
-docker stack rm test2
+docker stack rm test test2
 ```
