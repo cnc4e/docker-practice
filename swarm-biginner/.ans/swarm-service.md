@@ -13,7 +13,7 @@ docker service rm test
 
 ```
 mkdir service;cd service
-cat <<EOF > docker-compose.yaml
+cat <<EOF > test.yaml
 version: "3.9"
 
 services:
