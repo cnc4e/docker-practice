@@ -59,6 +59,8 @@ EOF
 
 6. スタック`test`を削除してください。
 
+*[解答例](./.ans/swarm-service-env.md)*
+
 ---
 
 [TOP](../README.md)   

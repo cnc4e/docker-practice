@@ -54,6 +54,7 @@ docker exec <container id> cat /test-config
 
 Secretを作成するときの元データには注意が必要です。たとえば上記手順だと`secret`というファイルに機密情報を記載しています。Docker内に保存されれば暗号化されますが、Secretを作成するときの元データはそのまま残ります。
 
+*[解答例](./.ans/swarm-secret.md)*
 
 ---
 

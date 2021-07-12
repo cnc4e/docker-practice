@@ -148,6 +148,8 @@ Fluentdをデプロイします。まずはFluentdの設定ファイルを作成
 
 なお、デュアルロギングの場合もローカルにログは溜まりますがデフォルトでローテーションが設定されているようです。[ネタ元](https://docs.docker.com/config/containers/logging/dual-logging/#configuration-options)
 
+*[解答例](./.ans/swarm-log.md)*
+
 ---
 
 [TOP](../README.md)   

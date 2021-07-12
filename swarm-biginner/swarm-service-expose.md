@@ -42,6 +42,8 @@ echo <worker0 or 1> > /usr/share/nginx/html/index.html
 
 このようにポートをマッピングしてコンテナを外部に公開できます。外部公開に使用するホストポートはクラスタ内のすべてのノードで使用されます。そのため同じクラスタで同じホストポートを使った外部公開はできません。また、外部からの通信はクラスタ内に構成されたルーティングメッシュを経由してコンテナに接続します。そのため、たとえアクセス先として指定したワーカーノード上でタスクが実行されていも別のワーカーノード上のタスクにルーティングされる可能性があります。[ネタ元](https://docs.docker.com/network/overlay/#bypass-the-routing-mesh-for-a-swarm-service)
 
+*[解答例](./.ans/swarm-service-expose.md)*
+
 ---
 
 [TOP](../README.md)   
