@@ -95,6 +95,8 @@ docker exec <container id> ls /data
 
 3. EFSを削除してください。
 
+*[解答例](./.ans/swarm-valume.md)*
+
 ---
 
 [TOP](../README.md)   

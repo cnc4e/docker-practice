@@ -103,6 +103,8 @@ replicatedによりタスクがスケジュールされるノードはマネー�
 
 4. スタック`test`を削除してください。
 
+*[解答例](./.ans/swarm-service-placement.md)*
+
 ---
 
 [TOP](../README.md)   

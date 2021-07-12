@@ -72,6 +72,8 @@ curl 127.0.0.1:8000
 
 14. スタック`test`を削除してください。
 
+*[解答例](./.ans/swarm-config.md)*
+
 ---
 
 [TOP](../README.md)   
