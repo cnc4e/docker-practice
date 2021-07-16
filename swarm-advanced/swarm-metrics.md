@@ -139,18 +139,18 @@ a69e29d5aba6   zabbix/zabbix-proxy-mysql:centos-5.4-latest        "/sbin/tini --
 
 > **特権モード(privileged)について**  
 > agentとして使用しているzabbix-docker-monitoringの公式手順ではprivilegedをつけてコンテナを起動しています。[ネタ元](https://github.com/monitoringartist/zabbix-docker-monitoring)  
-> しかし、Swarmではprivikegedコンテナを起動しようとしても`Ignoring unsupported option:privileged`となり起動できません。  
+> しかし、Swarmではprivikegedコンテナを起動しようとしても`Ignoring unsupported option:privileged`となりprivilegedで起動しません。  
 > そのため、本プラクティスではprivilegedを付けないでコンテナを起動しています。なお、privilegedなしでもこの後の手順は問題なく実施できます。  
-> また、privilegedコンテナは特権を許すためセキュリティ面で安全といえません。ワークロードのコンテナではprivilegedは設定しないようにしましょう。
+> また、privilegedコンテナは特権を許すためセキュリティ面で安全といえません。ワークロードのコンテナではprivilegedを設定しないようにしましょう。
 
 > **hostネットワークに接続するのはなぜですか？**  
 > Zabbixサーバーでhostを登録した時にworkerノードのプライベートDNSで登録したと思います。そのため、agentのホスト名を実行しているworkerノードのホスト名と同じにするためです。
 
-2. 上記作成したcomposeファイルを指定し、スタック`zabbix`を作成してください。
+1. 上記作成したcomposeファイルを指定し、スタック`zabbix`を作成してください。
 
-3. スタックの一覧、スタック内のサービス一覧、スタック内のタスク一覧をそれぞれ表示し、タスクがすべてのworkerノードにデプロイされていることを確認してください。
+2. スタックの一覧、スタック内のサービス一覧、スタック内のタスク一覧をそれぞれ表示し、タスクがすべてのworkerノードにデプロイされていることを確認してください。
 
-4. **Zabbixサーバー** Monitoring -> Latest data を表示してください。hostsにworkerノードのホスト名を入力してapplyするとそのworker上で動いているコンテナのメトリクスが確認できるはずです。
+3. **Zabbixサーバー** Monitoring -> Latest data を表示してください。hostsにworkerノードのホスト名を入力してapplyするとそのworker上で動いているコンテナのメトリクスが確認できるはずです。
 
 ## 4. 後片付け
 
