@@ -94,6 +94,9 @@ a69e29d5aba6   zabbix/zabbix-proxy-mysql:centos-5.4-latest        "/sbin/tini --
   - Connect to: IP
   - Port: 10050
 
+上記の通り、server→agentの通信はTCP10050番ポートを使います。また、agent→serverの通信はTCP10051番ポートを使います。[ネタ元](https://software.fujitsu.com/jp/manual/manualfiles/m150014/j2x17940/04z200/j7940-a-00-00.html)  
+そのため、クラスタ内部ではTCP10050およびTCP10051の通信を許可するようにSecurityGroupなどを設定しておきましょう。
+
 ### 2-2. テンプレート追加
 
 1. [https://raw.githubusercontent.com/monitoringartist/zabbix-docker-monitoring/master/template/Zabbix-Template-App-Docker.xml](https://raw.githubusercontent.com/monitoringartist/zabbix-docker-monitoring/master/template/Zabbix-Template-App-Docker.xml)を作業端末にダウンロードしてください。
