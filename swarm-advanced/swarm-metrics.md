@@ -129,11 +129,10 @@ a69e29d5aba6   zabbix/zabbix-proxy-mysql:centos-5.4-latest        "/sbin/tini --
 
 ## 3. workerへagentの配布
 
-1. 以下満たすcomposeファイル`dockbix-agent.yaml`を作成してください。（[ヒント①](https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir)、[ヒント②](https://docs.docker.com/compose/compose-file/compose-file-v3/#host-or-none)）
+1. 以下満たすcomposeファイル`dockbix-agent.yaml`を作成してください。（[ヒント](https://docs.docker.com/compose/compose-file/compose-file-v3/#host-or-none)）
 
 - service: dockbix-agent
   - image: monitoringartist/dockbix-agent-xxl-limited:latest
-  - 特権モード(privileged): 有効
   - deploy: global
   - volumes: /を/rootfs、/var/runを/var/runにマウント
   - environment: ZA_ServerとZA_ServerActiveにZabbixサーバーをインストールしたIPアドレスを設定
@@ -141,8 +140,11 @@ a69e29d5aba6   zabbix/zabbix-proxy-mysql:centos-5.4-latest        "/sbin/tini --
 - networks: hostnet
   - すでにあるhostという名前のネットワークを指定
 
-> **特権モードや/をマウントするのは安全ですか？**  
-> いいえ。安全ではないです。しかし、管理系機能を実装する時はこういったことをすることもあります。ワークロードのコンテナではこのような設定はしないようにしましょう。
+> **特権モード(privileged)について**  
+> agentとして使用しているzabbix-docker-monitoringの公式手順ではprivilegedをつけてコンテナを起動しています。[ネタ元](https://github.com/monitoringartist/zabbix-docker-monitoring)  
+> しかし、Swarmではprivikegedコンテナを起動しようとしても`Ignoring unsupported option:privileged`となりprivilegedで起動しません。  
+> そのため、本プラクティスではprivilegedを付けないでコンテナを起動しています。なお、privilegedなしでもこの後の手順は問題なく実施できます。  
+> また、privilegedコンテナは特権を許すためセキュリティ面で安全といえません。ワークロードのコンテナではprivilegedを設定しないようにしましょう。
 
 > **hostネットワークに接続するのはなぜですか？**  
 > Zabbixサーバーでhostを登録した時にworkerノードのプライベートDNSで登録したと思います。そのため、agentのホスト名を実行しているworkerノードのホスト名と同じにするためです。
