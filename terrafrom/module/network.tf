@@ -1,3 +1,5 @@
+data "aws_availability_zones" "available" {}
+
 resource "aws_vpc" "this" {
   cidr_block           = var.vpc_cidr
   instance_tenancy     = "default"
@@ -15,7 +17,7 @@ resource "aws_vpc" "this" {
 
 resource "aws_subnet" "pub-sub" {
   vpc_id                  = aws_vpc.this.id
-  availability_zone       = var.availability_zone
+  availability_zone       = data.aws_availability_zones.available.names[0]
   cidr_block              = var.subnet_cidr
   map_public_ip_on_launch = true
 

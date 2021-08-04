@@ -30,8 +30,7 @@ locals {
   ## VPC
   vpc_cidr = "10.100.0.0/16"
   ## subnet
-  availability_zone = ""
-  subnet_cidr       = "10.100.0.0/24"
+  subnet_cidr = "10.100.0.0/24"
 
   # EC2
   nodes         = ["manager0", "manager1", "manager2", "worker1", "worker2"] # リストした名前のノードを作成
@@ -60,9 +59,8 @@ module "docker-swarm" {
   tags      = local.tags
 
   # Network
-  vpc_cidr          = local.vpc_cidr
-  availability_zone = local.availability_zone
-  subnet_cidr       = local.subnet_cidr
+  vpc_cidr    = local.vpc_cidr
+  subnet_cidr = local.subnet_cidr
 
   # EC2
   nodes         = local.nodes
