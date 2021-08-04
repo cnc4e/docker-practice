@@ -47,14 +47,14 @@ systemctl restart amazon-ssm-agent
 SHELLSCRIPT
 }
 
-data "aws_ami" "centos8_ami"  {
+data "aws_ami" "centos8_ami" {
   most_recent = true
-  owners = ["aws-marketplace"]
+  owners      = ["aws-marketplace"]
 
   # "CentOS 8 (x86_64) - with Updates HVM" の product-codeで対象AMIを指定 
   filter {
-    name = "product-code"
-    values = "47k9ia2igxpcce2bzo8u3kj03"
+    name   = "product-code"
+    values = ["47k9ia2igxpcce2bzo8u3kj03"]
   }
 }
 
