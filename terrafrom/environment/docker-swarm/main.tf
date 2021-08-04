@@ -35,7 +35,6 @@ locals {
 
   # EC2
   nodes         = ["manager0", "manager1", "manager2", "worker1", "worker2"] # リストした名前のノードを作成
-  ami           = "ami-098f55b4287a885ba"                                    # REGION のcentos7
   instance_type = "t3.medium"
   key_name      = "swarm" # インスタンスのキーペア。あらかじめ作成が必要
 

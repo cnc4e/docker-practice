@@ -31,11 +31,6 @@ variable "nodes" {
   type        = list(string)
 }
 
-variable "ami" {
-  description = "EC2で利用するami"
-  type        = string
-}
-
 variable "instance_type" {
   description = "EC2のインスタンスタイプ"
   type        = string

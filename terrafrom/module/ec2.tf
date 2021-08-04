@@ -38,7 +38,7 @@ systemctl enable docker
 systemctl restart docker
 
 ## install ssm agent
-yum install -y https://s3.${data.aws_region.current.name}.amazonaws.com/amazon-ssm-${data.aws_region.current.name}/latest/linux_amd64/amazon-ssm-agent.rpm
+yum install -y https://s3.${data.aws_region.current.name}.amazonaws.com/amazon-ssm-${data.aws_region.current.name}/laENVIRONMENT/linux_amd64/amazon-ssm-agent.rpm
 
 ## start ssm agent
 systemctl enable amazon-ssm-agent
@@ -47,10 +47,21 @@ systemctl restart amazon-ssm-agent
 SHELLSCRIPT
 }
 
+data "aws_ami" "centos8_ami"  {
+  most_recent = true
+  owners = ["aws-marketplace"]
+
+  # "CentOS 8 (x86_64) - with Updates HVM" の product-codeで対象AMIを指定 
+  filter {
+    name = "product-code"
+    values = "47k9ia2igxpcce2bzo8u3kj03"
+  }
+}
+
 resource "aws_instance" "swarm_nodes" {
   for_each = toset(var.nodes)
 
-  ami                         = var.ami
+  ami                         = data.aws_ami.centos8_ami.id
   instance_type               = var.instance_type
   iam_instance_profile        = aws_iam_instance_profile.swarmnode.name
   associate_public_ip_address = true
