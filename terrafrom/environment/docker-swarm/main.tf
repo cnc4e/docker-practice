@@ -66,7 +66,6 @@ module "docker-swarm" {
 
   # EC2
   nodes         = local.nodes
-  ami           = local.ami
   instance_type = local.instance_type
   key_name      = local.key_name
 
