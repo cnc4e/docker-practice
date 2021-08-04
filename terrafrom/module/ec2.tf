@@ -38,7 +38,7 @@ systemctl enable docker
 systemctl restart docker
 
 ## install ssm agent
-yum install -y https://s3.${data.aws_region.current.name}.amazonaws.com/amazon-ssm-${data.aws_region.current.name}/laENVIRONMENT/linux_amd64/amazon-ssm-agent.rpm
+yum install -y https://s3.${data.aws_region.current.name}.amazonaws.com/amazon-ssm-${data.aws_region.current.name}/latest/linux_amd64/amazon-ssm-agent.rpm
 
 ## start ssm agent
 systemctl enable amazon-ssm-agent
