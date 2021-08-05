@@ -15,11 +15,6 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "availability_zone" {
-  description = "Subnetを作成するAZ"
-  type        = string
-}
-
 variable "subnet_cidr" {
   description = "Subnetに割り当てるCIDRブロック"
   type        = string
