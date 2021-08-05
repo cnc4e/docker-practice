@@ -2,23 +2,23 @@ terraform {
   required_version = ">= 0.15.4"
 
   backend "s3" {
-    bucket         = "dc-practice-tfstate"
+    bucket         = "PJ-NAME-tfstate"
     key            = "efs/terraform.tfstate"
     encrypt        = true
-    dynamodb_table = "dc-practice-tfstate-lock"
-    region         = "us-west-1"
+    dynamodb_table = "PJ-NAME-tfstate-lock"
+    region         = "REGION"
   }
 }
 
 provider "aws" {
-  region = "us-west-1"
+  region = "REGION"
 }
 
 locals {
   # common parameter
-  pj    = "dc-practice"
-  env   = "test"
-  owner = "shimadzu"
+  pj    = "PJ-NAME"
+  env   = "ENVIRONMENT"
+  owner = "OWNER"
 
   tags = {
     pj    = local.pj
@@ -27,12 +27,16 @@ locals {
   }
 }
 
-module "amazon-efs" {
+module "efs" {
 
-  source = "../../module/efs.tf"
+  source = "../../module/efs"
 
   # Common
   base_name = "${local.pj}-${local.env}"
   tags      = local.tags
 
+}
+
+output "mount-ip" {
+  value = module.efs.mount-ip
 }
