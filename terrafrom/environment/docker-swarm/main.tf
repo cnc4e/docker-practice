@@ -52,7 +52,7 @@ locals {
 
 module "docker-swarm" {
 
-  source = "../../module"
+  source = "../../module/docker-swarm"
 
   # Common
   base_name = "${local.pj}-${local.env}"
