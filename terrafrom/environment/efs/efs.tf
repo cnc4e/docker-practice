@@ -2,23 +2,23 @@ terraform {
   required_version = ">= 0.15.4"
 
   backend "s3" {
-    bucket         = "PJ-NAME-tfstate"
+    bucket         = "dc-practice-tfstate"
     key            = "efs/terraform.tfstate"
     encrypt        = true
-    dynamodb_table = "PJ-NAME-tfstate-lock"
-    region         = "REGION"
+    dynamodb_table = "dc-practice-tfstate-lock"
+    region         = "us-west-1"
   }
 }
 
 provider "aws" {
-  region = "REGION"
+  region = "us-west-1"
 }
 
 locals {
   # common parameter
-  pj    = "PJ-NAME"
-  env   = "ENVIRONMENT"
-  owner = "OWNER"
+  pj    = "dc-practice"
+  env   = "test"
+  owner = "shimadzu"
 
   tags = {
     pj    = local.pj
