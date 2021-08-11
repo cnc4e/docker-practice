@@ -49,7 +49,22 @@ systemctl restart amazon-ssm-agent
 
 ## modify hostname ##
 echo "########## start modify hostname ##########"
-hostnamectl set-hostname  ${var.nodes}
+
+### aws cli install ###
+yum install -y unzip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+./aws/install
+
+### set hostname from tag name ##
+instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+tag_name=$(/usr/local/bin/aws ec2 describe-instances \
+                  --region ${data.aws_region.current.name} \
+                  --instance-id $instance_id \
+                  --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value' \
+                  --output text)
+hostname=$(echo $tag_name | sed -e s/${var.base_name}-//)
+hostnamectl set-hostname $hostname
 
 SHELLSCRIPT
 }
