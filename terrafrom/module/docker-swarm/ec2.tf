@@ -5,6 +5,11 @@ echo "########## start yum update ##########"
 yum update -y
 echo "########## finish yum update ##########"
 
+## install wget
+echo "########## start install wget ##########"
+yum install -y wget
+echo "########## finish install wget ##########"
+
 ## install Docker
 echo "########## start install Docker ##########"
 curl -sSL https://get.docker.com/ | sh
