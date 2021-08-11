@@ -26,44 +26,9 @@ data "aws_iam_policy" "systems_manager" {
   arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-data "aws_iam_policy" "access_ecr" {
-  arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
-}
-
-resource "aws_iam_policy" "s3objectput" {
-  name        = "${var.base_name}-SwarmNode-s3objectput"
-  path        = "/"
-  description = "s3にオブジェクトをPUTする"
-
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "s3:PutObject"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-}
-
 resource "aws_iam_role_policy_attachment" "systems_manager" {
   role       = aws_iam_role.role.name
   policy_arn = data.aws_iam_policy.systems_manager.arn
-}
-
-resource "aws_iam_role_policy_attachment" "access_ecr" {
-  role       = aws_iam_role.role.name
-  policy_arn = data.aws_iam_policy.access_ecr.arn
-}
-
-resource "aws_iam_role_policy_attachment" "s3objectput" {
-  role       = aws_iam_role.role.name
-  policy_arn = aws_iam_policy.s3objectput.arn
 }
 
 resource "aws_iam_instance_profile" "swarmnode" {
@@ -112,4 +77,30 @@ data "aws_iam_policy" "cloudwatchlogsfull" {
 resource "aws_iam_role_policy_attachment" "cloudwatchlogsfull" {
   role       = aws_iam_role.role.name
   policy_arn = data.aws_iam_policy.cloudwatchlogsfull.arn
+}
+
+# EC2からinstance情報を取得
+resource "aws_iam_policy" "ec2_describe" {
+  name        = "${var.base_name}-SwarmNode-ec2_describe"
+  description = "EC2のinstance情報を取得する"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ec2:Describe*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_describe" {
+  role       = aws_iam_role.role.name
+  policy_arn = aws_iam_policy.ec2_describe.arn
 }
