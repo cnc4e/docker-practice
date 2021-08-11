@@ -38,8 +38,8 @@ locals {
   key_name      = "swarm" # インスタンスのキーペア。あらかじめ作成が必要
 
   # SecurityGroup
-  allow_ssh_cidrs        = [] # Tetra(東京)は210.148.59.64/28。どこからも許可しない場合は空配列を指定する。
-  allow_docker_api_cidrs = [] # Tetra(東京)は210.148.59.64/28。どこからも許可しない場合は空配列を指定する。
+  allow_ssh_cidrs        = [] # 各ノードにインターネット経由でSSH接続する場合に送信元グローバルIPを指定する。どこからも許可しない場合は空配列を指定する。
+  allow_docker_api_cidrs = [] # 各ノードにインターネット経由でSSH接続する場合に送信元グローバルIPを指定する。どこからも許可しない場合は空配列を指定する。
 
 
   # ClowdWatch
