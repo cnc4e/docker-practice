@@ -1,26 +1,22 @@
 locals {
   default_init_script_previous = <<SHELLSCRIPT
 #!/bin/bash
-echo "########## start yum update ##########"
+echo "########## yum update ##########"
 yum update -y
-echo "########## finish yum update ##########"
 
 ## install wget
-echo "########## start install wget ##########"
+echo "########## install wget ##########"
 yum install -y wget
-echo "########## finish install wget ##########"
 
 ## install Docker
-echo "########## start install Docker ##########"
+echo "########## install Docker ##########"
 curl -sSL https://get.docker.com/ | sh
-echo "########## finish install Docker ##########"
 
 ## install docker-compose
-echo "########## start install docker-compose ##########"
+echo "########## install docker-compose ##########"
 curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-echo "########## finish install docker-compose ##########"
 
 ## setup docker
 # mkdir /etc/docker
@@ -43,11 +39,17 @@ systemctl enable docker
 systemctl restart docker
 
 ## install ssm agent
+echo "########## install ssm agent ##########"
 yum install -y https://s3.${data.aws_region.current.name}.amazonaws.com/amazon-ssm-${data.aws_region.current.name}/latest/linux_amd64/amazon-ssm-agent.rpm
 
 ## start ssm agent
+echo "########## start ssm agent ##########"
 systemctl enable amazon-ssm-agent
 systemctl restart amazon-ssm-agent
+
+## modify hostname ##
+echo "########## start modify hostname ##########"
+hostnamectl set-hostname  ${var.nodes}
 
 SHELLSCRIPT
 }
