@@ -1,15 +1,3 @@
-terraform {
-  required_version = ">= 0.15.4"
-
-  backend "s3" {
-    bucket         = "PJ-NAME-tfstate"
-    key            = "swarm/terraform.tfstate"
-    encrypt        = true
-    dynamodb_table = "PJ-NAME-tfstate-lock"
-    region         = "REGION"
-  }
-}
-
 provider "aws" {
   region = "REGION"
 }
