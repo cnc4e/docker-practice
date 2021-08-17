@@ -12,6 +12,10 @@ Dockerおよびdocker-composeをインストールしてありDocker Hubに接�
 また、WSLの環境でDockerを使えるようにするには以下のQiitaなどが参考になると思います。
 - [WSLでdockerのインストールからdocker-composeまで動かす](https://qiita.com/tettsu__/items/85c96850d187e4386c24)
 
+docker swarm に関しては、AWS上に環境を構築するためのTerraformを用意しています。こちらを使用する際は以下を確認してください。
+
+- [環境構築用Terraform](./terrafrom/guide.md)
+
 # プラクティスの内容
 
 プラクティス内の``{ホストOS名}``など{}でくくった日本語の箇所は括弧内の日本語に従い置換してください。
