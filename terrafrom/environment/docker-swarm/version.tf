@@ -7,12 +7,4 @@ terraform {
       version = ">= 3.53.0, < 4.0.0"
     }
   }
-
-  backend "s3" {
-    bucket         = "PJ-NAME-tfstate"
-    key            = "swarm/terraform.tfstate"
-    encrypt        = true
-    dynamodb_table = "PJ-NAME-tfstate-lock"
-    region         = "REGION"
-  }
 }
