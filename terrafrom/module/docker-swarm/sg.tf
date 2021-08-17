@@ -93,3 +93,13 @@ resource "aws_security_group_rule" "self-esp" {
   self              = true
   description       = "overlay network encripted"
 }
+
+resource "aws_security_group_rule" "zabbix" {
+  type              = "ingress"
+  from_port         = 10050
+  to_port           = 10051
+  protocol          = "tcp"
+  security_group_id = aws_security_group.swarm-node-sg.id
+  self              = true
+  description       = "zabbix"
+}
