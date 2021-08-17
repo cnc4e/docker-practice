@@ -39,12 +39,13 @@ cd $CLONEDIR/docker-practice/terraform/environment/docker-swarm
 ```
 
 環境構築に使用する各種パラメータを`docker-swarm.tf`に指定します。
-コメントを参考に各パラメータを指定してください。
+ファイルのコメントを参考に各パラメータを指定してください。
+以下に例を記載します。
 
 ``` terraform
 provider "aws" {
   # 環境を構築するリージョンを指定します。
-  region = "REGION"
+  region = "us-west-1"
 }
 
 locals {
@@ -72,16 +73,15 @@ locals {
   ## 作成するEC2のインスタンスタイプを指定します。
   instance_type = "t2.medium"
   ## EC2に割り当てるキーペアを指定します。あらかじめ作成が必要です。
-  key_name      = "key_pair_name"
+  key_name      = "ec2_key_pair"
 
   # SecurityGroup
 　## 各ノードにインターネット経由でSSH接続する場合に送信元グローバルIPを指定します。
   ## どこからも許可しない場合は空配列を指定する。
-  allow_ssh_cidrs        = [] 
+  allow_ssh_cidrs        = ["119.110.104.16/28"] 
   ## 各ノードにインターネット経由でdocker APIを利用する場合に送信元グローバルIPを指定します。
   ## どこからも許可しない場合は空配列を指定する。
-  allow_docker_api_cidrs = [] 
-
+  allow_docker_api_cidrs = ["119.110.104.16/28"] 
 
   # ClowdWatch
   ## 作成するEC2に自動起動/自動停止のスケジュールを設定します。
@@ -123,7 +123,7 @@ cd $CLONEDIR/docker-practice/terraform/environment/efs
 ``` terraform
 provider "aws" {
   # 環境を構築するリージョンを指定します。
-  region = "REGION"
+  region = "us-west-1"
 }
 
 　<中略>
@@ -131,9 +131,9 @@ provider "aws" {
 locals {
   # common parameter
   ## 各リソースの名称やタグ情報に使用するパラメータを指定します。
-  pj    = "PJ-NAME"
-  env   = "ENVIRONMENT"
-  owner = "OWNER"
+  pj    = "docker-practice"
+  env   = "develop"
+  owner = "user01"
 
   tags = {
     pj    = local.pj
