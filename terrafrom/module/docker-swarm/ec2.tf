@@ -56,14 +56,26 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 ./aws/install
 
+/usr/local/bin/aws --version
+
 ### set hostname from tag name ##
-instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-tag_name=$(/usr/local/bin/aws ec2 describe-instances \
-                  --region ${data.aws_region.current.name} \
-                  --instance-id $instance_id \
-                  --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value' \
-                  --output text)
-hostname=$(echo $tag_name | sed -e s/${var.base_name}-//)
+
+instance_id=""
+tag_name=""
+count=0
+
+while [ $count = 0 ]
+do
+  instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+  tag_name=$(/usr/local/bin/aws ec2 describe-instances \
+                    --region ${data.aws_region.current.name} \
+                    --instance-id $instance_id \
+                    --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value' \
+                    --output text)
+  hostname=`echo $tag_name | sed -e s/${var.base_name}-//`
+  count=$(echo -n $hostname | wc -c)
+done
+
 hostnamectl set-hostname $hostname
 
 SHELLSCRIPT
