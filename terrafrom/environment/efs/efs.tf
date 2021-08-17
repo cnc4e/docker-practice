@@ -1,22 +1,20 @@
 provider "aws" {
+  # 環境を構築するリージョンを指定します。
   region = "REGION"
 }
 
 # inport network value
 data "terraform_remote_state" "network" {
-  backend = "s3"
+  backend = "local"
 
   config = {
-    bucket         = "PJ-NAME-tfstate"
-    key            = "swarm/terraform.tfstate"
-    encrypt        = true
-    dynamodb_table = "PJ-NAME-tfstate-lock"
-    region         = "REGION"
+    path = "../docker-swarm/"
   }
 }
 
 locals {
   # common parameter
+  ## 各リソースの名称やタグ情報に使用するパラメータを指定します。
   pj    = "PJ-NAME"
   env   = "ENVIRONMENT"
   owner = "OWNER"
