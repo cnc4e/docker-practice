@@ -8,7 +8,7 @@ data "terraform_remote_state" "network" {
   backend = "local"
 
   config = {
-    path = "../docker-swarm/"
+    path = "../docker-swarm/terraform.tfstate"
   }
 }
 
