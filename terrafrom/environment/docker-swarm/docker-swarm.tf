@@ -26,7 +26,7 @@ locals {
   ## 作成するノードの一覧です。リストした名前のEC2を作成します。
   nodes = ["manager0", "manager1", "manager2", "worker0", "worker1"]
   ## 作成するEC2のインスタンスタイプを指定します。
-  instance_type = "t3.medium"
+  instance_type = "t2.medium"
   ## EC2に割り当てるキーペアを指定します。あらかじめ作成が必要です。
   key_name = "key_pair_name"
 
