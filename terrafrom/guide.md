@@ -119,6 +119,7 @@ cd $CLONEDIR/docker-practice/terraform/environment/efs
 
 環境構築に使用する各種パラメータを`efs.tf`に指定します。
 コメントを参考に各パラメータを指定してください。
+以下に例を記載します。
 
 ``` terraform
 provider "aws" {
