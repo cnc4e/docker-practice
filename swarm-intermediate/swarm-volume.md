@@ -7,7 +7,7 @@
 `このプラクティスはAWS環境を前提にしています。`
 
 またこのプラクティスで使用する Amazon EFSを作成するterraformコードを用意しています。
-[環境構築用Terraform（EFS）](../terrafrom/guide.md#efs)を参照してください。
+[環境構築用Terraform（EFS）](../terraform/guide.md#efs)を参照してください。
 
 # ボリュームの使用
 
