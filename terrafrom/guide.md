@@ -200,7 +200,7 @@ terraform apply
 それぞれの操作方法について本節で補足します。
 
 1. インターネット経由でSSH接続し、各ノード上で操作する
-1. AWS Session Managerを使用してコンソール接続し、ブラウザ上で操作する
+1. AWS Session Managerを使用してコンソール接続し、WEBブラウザやAWS CLIなどで操作する
 1. インターネット経由でdocker APIを使用し、各ノードをリモートで操作する
 
 ### インターネット経由でSSH接続し、各ノード上で操作する
@@ -221,7 +221,7 @@ key_nameに指定したキーペアの秘密鍵を使用してください。
   allow_ssh_cidrs        = ["119.110.104.16/28"] 
 ```
 
-### AWS Session Managerを使用してコンソール接続し、ブラウザ上で操作する
+### AWS Session Managerを使用してコンソール接続し、WEBブラウザやAWS CLIなどで操作する
 
 各ノードには[AWS Session Manager](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager.html)を使用してコンソール接続することが可能です。
 
@@ -229,8 +229,18 @@ Session Managerを使用するために必要なssm agentのインストール�
 そのためEC2の作成・起動が完了してから、Session Managerが利用可能になるまで、
 10～15分程度の時間が必要なりますのでご注意ください。
 
-Session Managerの具体的な使用方法はこちらの[AWS公式ドキュメント セッションを開始する](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html)を参照してください。
+Session Managerでの操作方法にはいくつか種類があります。
+各々の具体的な使用方法は以下のAWS公式ドキュメントを参照してください。
 
+- GUI(WEBブラウザ)を使用する場合
+  - [セッションを開始する (Systems Manager コンソール)](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html#start-sys-console)
+  - [セッションを開始する (Amazon EC2 コンソール)](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html#start-ec2-console)
+  - [セッションの開始 (ポート転送)](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html#sessions-start-port-forwarding)
+- CLI(AWS CLIや、SSHコマンドなど)を使用する場合
+  - [セッションの開始 (AWS CLI)](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html#sessions-start-cli)
+  - [セッションの開始 (SSH)](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html#sessions-start-ssh)
+  - [セッションの開始 (対話形式と非対話形式のコマンド)](https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/session-manager-working-with-sessions-start.html#sessions-start-interactive-commands)
+  
 ### インターネット経由でdocker APIを使用し、各ノードをリモートで操作する
 
 dockerではAPIを外部に公開することでリモートからdockerを操作することが可能です。
