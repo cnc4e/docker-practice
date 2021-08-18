@@ -22,6 +22,19 @@
 
 本節で具体的な使用方法を説明します。
 
+### 事前準備
+
+本ガイドではAWS Marketplaceで提供されている`CentOS 8 (x86_64) - with Updates HVM`を使用します。
+そのため、事前にこのOSイメージを環境構築で使用するAWSアカウントに`Subscribe`する必要があります。
+次の手順を実施してください。
+
+1. 使用するAWSアカウントのマネージメントコンソールにログインする
+1. [AWS Marketplace](https://aws.amazon.com/marketplace/pp?sku=47k9ia2igxpcce2bzo8u3kj03)にアクセスする。
+1. 画面右上の`Contunue to Subscribe`を選択する。
+
+`You're subscribed to this software. Please see the terms and pricing details below or click the button above to configure your software.`
+と表示されていれば作業完了です。
+
 ### Docker Swarm
 
 まず本レポジトリを任意の場所でクローンします。
@@ -45,7 +58,7 @@ cd $CLONEDIR/docker-practice/terraform/environment/docker-swarm
 ---
 
 :warning:
-次のパラメータについては必ずパラメータの修正をお願いします。
+次のパラメータについては必ずパラメータの修正を実施してください。
 
 - region
 - pj
@@ -160,7 +173,7 @@ locals {
 ---
 
 :warning:
-次のパラメータについては必ずパラメータの修正をお願いします。
+次のパラメータについては必ずパラメータの修正を実施してください。
 
 - region
 - pj
@@ -168,7 +181,6 @@ locals {
 - owner
 
 ---
-
 
 以下のコマンドでリソースを作成します。
 
