@@ -42,6 +42,19 @@ cd $CLONEDIR/docker-practice/terraform/environment/docker-swarm
 ファイルのコメントを参考に各パラメータを指定してください。
 以下に例を記載します。
 
+---
+
+:warning:
+次のパラメータについては必ずパラメータの修正をお願いします。
+
+- region
+- pj
+- env
+- owner
+- key_name
+
+---
+
 ``` terraform
 provider "aws" {
   # 環境を構築するリージョンを指定します。
@@ -143,6 +156,19 @@ locals {
   }
 }
 ```
+
+---
+
+:warning:
+次のパラメータについては必ずパラメータの修正をお願いします。
+
+- region
+- pj
+- env
+- owner
+
+---
+
 
 以下のコマンドでリソースを作成します。
 
