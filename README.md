@@ -12,6 +12,10 @@ Dockerおよびdocker-composeをインストールしてありDocker Hubに接�
 また、WSLの環境でDockerを使えるようにするには以下のQiitaなどが参考になると思います。
 - [WSLでdockerのインストールからdocker-composeまで動かす](https://qiita.com/tettsu__/items/85c96850d187e4386c24)
 
+docker swarm に関しては、AWS上に環境を構築するためのTerraformを用意しています。こちらを使用する際は以下を確認してください。
+
+- [環境構築用Terraform](./terraform/guide.md)
+
 # プラクティスの内容
 
 プラクティス内の``{ホストOS名}``など{}でくくった日本語の箇所は括弧内の日本語に従い置換してください。
@@ -48,14 +52,14 @@ Dockerおよびdocker-composeをインストールしてありDocker Hubに接�
 
 主にサービスの設定について扱います。
 
-- [Swarmクラスタの構築](./swarm-biginner/swarm-create.md)
-- [サービスの作成](./swarm-biginner/swarm-service.md)
-- [サービスの配置](./swarm-biginner/swarm-service-placement.md)
-- [サービスのリソース指定](./swarm-biginner/swarm-service-resouces.md)
-- [サービスのボリュームマウント](./swarm-biginner/swarm-service-volume.md)
-- [サービスの外部公開](./swarm-biginner/swarm-service-expose.md)
-- [サービスのヘルスチェック](./swarm-biginner/swarm-service-healthcheck.md)
-- [サービスの環境変数](./swarm-biginner/swarm-service-env.md)
+- [Swarmクラスタの構築](./swarm-beginner/swarm-create.md)
+- [サービスの作成](./swarm-beginner/swarm-service.md)
+- [サービスの配置](./swarm-beginner/swarm-service-placement.md)
+- [サービスのリソース指定](./swarm-beginner/swarm-service-resouces.md)
+- [サービスのボリュームマウント](./swarm-beginner/swarm-service-volume.md)
+- [サービスの外部公開](./swarm-beginner/swarm-service-expose.md)
+- [サービスのヘルスチェック](./swarm-beginner/swarm-service-healthcheck.md)
+- [サービスの環境変数](./swarm-beginner/swarm-service-env.md)
 
 他にもサービスには色々な設定があります。全量は[こちら](https://docs.docker.com/compose/compose-file/compose-file-v3/)のDockerドキュメントを参照ください。
 
