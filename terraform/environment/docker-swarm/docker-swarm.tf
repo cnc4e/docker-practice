@@ -41,10 +41,10 @@ locals {
 
   # ClowdWatch
   ## 作成するEC2に自動起動/自動停止のスケジュールを設定します。
-  auto_start          = true                       # trueにするとEC2の自動起動をスケジュール設定します。
-  auto_start_schedule = "cron(06 6 ? * MON-FRI *)" # 日本時間で平日09:00の指定
-  auto_stop           = true                       # trueにするとEC2の自動停止をスケジュール設定します。
-  auto_stop_schedule  = "cron(04 6 ? * MON-FRI *)" # 日本時間で平日19:00の指定
+  auto_start          = true                        # trueにするとEC2の自動起動をスケジュール設定します。
+  auto_start_schedule = "cron(00 0 ? * MON-FRI *)"  # 日本時間で平日09:00の指定
+  auto_stop           = true                        # trueにするとEC2の自動停止をスケジュール設定します。
+  auto_stop_schedule  = "cron(00 10 ? * MON-FRI *)" # 日本時間で平日19:00の指定
 }
 
 module "docker-swarm" {
