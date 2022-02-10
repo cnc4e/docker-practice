@@ -1,12 +1,4 @@
 ```
-wget https://github.com/ContainX/docker-volume-netshare/releases/download/v0.36/docker-volume-netshare_0.36_linux_amd64.tar.gz
-tar -zxvf docker-volume-netshare_0.36_linux_amd64.tar.gz
-mv docker-volume-netshare_0.36_linux_amd64/docker-volume-netshare /usr/local/sbin/
-docker-volume-netshare -h
-docker-volume-netshare efs &
-```
-
-```
 cat <<EOF > volume-mount.yaml
 version: "3.9"
 
@@ -65,6 +57,4 @@ docker stack rm test
 ```
 # worker0/1
 docker volume rm test_efs
-ps -ef | grep docker-volume-netshare
-kill -9 <pid>
 ```
