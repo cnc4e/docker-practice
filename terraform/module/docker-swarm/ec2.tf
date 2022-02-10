@@ -1,12 +1,20 @@
 locals {
   default_init_script_previous = <<SHELLSCRIPT
 #!/bin/bash
-echo "########## yum update ##########"
-yum update -y
+## .repoファイル更新 ##
+echo "########## .repo fix ##########"
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+dnf install centos-release-stream -y
+dnf swap centos-{linux,stream}-repos -y
+
+## packages update ##
+echo "########## packages update ###########"
+dnf upgrade -y
 
 ## install wget
 echo "########## install wget ##########"
-yum install -y wget
+dnf install -y wget
 
 ## install Docker
 echo "########## install Docker ##########"
@@ -18,20 +26,6 @@ curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compo
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-## setup docker
-# mkdir /etc/docker
-# cat << EOF > /etc/docker/daemon.json
-# {
-#   "hosts" : [ "tcp://0.0.0.0:2375", "unix:///var/run/docker.sock" ]
-# }
-# EOF
-# mkdir -p /etc/systemd/system/docker.service.d/
-# cat <<EOF > /etc/systemd/system/docker.service.d/docker.conf
-# [Service]
-# ExecStart=
-# ExecStart=/usr/bin/dockerd
-# EOF
-
 ## start docker
 # systemctl daemon-reload
 echo "########## start dokcer.services ##########"
@@ -40,7 +34,7 @@ systemctl restart docker
 
 ## install ssm agent
 echo "########## install ssm agent ##########"
-yum install -y https://s3.${data.aws_region.current.name}.amazonaws.com/amazon-ssm-${data.aws_region.current.name}/latest/linux_amd64/amazon-ssm-agent.rpm
+dnf install -y https://s3.${data.aws_region.current.name}.amazonaws.com/amazon-ssm-${data.aws_region.current.name}/latest/linux_amd64/amazon-ssm-agent.rpm
 
 ## start ssm agent
 echo "########## start ssm agent ##########"
@@ -51,7 +45,7 @@ systemctl restart amazon-ssm-agent
 echo "########## start modify hostname ##########"
 
 ### aws cli install ###
-yum install -y unzip
+dnf install -y unzip
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 ./aws/install
@@ -62,9 +56,11 @@ unzip awscliv2.zip
 
 instance_id=""
 tag_name=""
+hostname=""
+hostname_count=0
 count=0
 
-while [ $count = 0 ]
+while [ $hostname_count -eq 0 ] && [ $count -lt 100 ]
 do
   instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
   tag_name=$(/usr/local/bin/aws ec2 describe-instances \
@@ -73,10 +69,12 @@ do
                     --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value' \
                     --output text)
   hostname=`echo $tag_name | sed -e s/${var.base_name}-//`
-  count=$(echo -n $hostname | wc -c)
+  hostname_count=$(echo -n $hostname | wc -c)
+  count=$((count += 1))
 done
 
 hostnamectl set-hostname $hostname
+echo $hostname
 
 SHELLSCRIPT
 }
