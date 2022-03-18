@@ -32,7 +32,7 @@ resource "aws_iam_role_policy_attachment" "systems_manager" {
 }
 
 resource "aws_iam_instance_profile" "swarmnode" {
-  name = "SwarmNode-instance-profile"
+  name = "${var.base_name}-SwarmNode-instance-profile"
   role = aws_iam_role.role.name
 }
 

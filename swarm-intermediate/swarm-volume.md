@@ -1,4 +1,4 @@
-[TOP](../README.md)   
+[TOP](../README.md)
 前: [シークレットの使用](./swarm-secret.md)  
 次: -  
 
@@ -11,35 +11,14 @@
 
 # ボリュームの使用
 
-コンテナの外部にデータを保管する方法として、`volumeマウント`と`bindマウント`の2つがあります。`volumeマウント`はボリュームプラグインとDockerが連携することで専用のボリュームを切り出し、そのボリュームをタスクにマウントさせる方法です。`bindマウント`はあらかじめノードにマウント対象のパスを作成する必要がありますが、`volumeマウント`ではその必要はありません。ノード数が大量にあり、マウントするボリュームの数も多い場合はbindマウントよりもvolumeマウントの方が楽に管理できるでしょう。（[ネタ元](https://docs.docker.com/storage/volumes/)）
+コンテナの外部にデータを保管する方法として、`volumeマウント`と`bindマウント`の2つがあります。`volumeマウント`はボリュームドライバとDockerが連携することで専用のボリュームを切り出し、そのボリュームをタスクにマウントさせる方法です。`bindマウント`はあらかじめノードにマウント対象のパスを作成する必要がありますが、`volumeマウント`ではその必要はありません。ノード数が大量にあり、マウントするボリュームの数も多い場合はbindマウントよりもvolumeマウントの方が楽に管理できるでしょう。（[ネタ元](https://docs.docker.com/storage/volumes/)）
+本プラクティスでは、デフォルトで使用可能な`local`ドライバというボリュームドライバを使用します。
 
-ボリュームプラグインはさまざまなものが提供されています。一覧は[こちら](https://docs.docker.com/engine/extend/legacy_plugins/#volume-plugins)を参照してください。
-
-本プラクティスはプラグインとして[Netshare plugin](http://netshare.containx.io/)を使用し、Amazon EFSをvolumeマウントします。（Netshare pluginはEFSでなくてもNFSなら使えるんだと思う。）
-
-## プラグインの準備
-
-1. ワーカーノードと同じVPCにEFSを構築してください。また、EFSのSGにはワーカーノードからのインバウンドアクセスを許可したルールを設定してください。作成したEFSのIPアドレスを控えておいてください。
-
-2. **すべてのワーカーノードで**[こちら](https://github.com/ContainX/docker-volume-netshare/releases)からワーカーノードの種類にあったバイナリをワーカーノードにダウンロードしてください。以下、コマンド例です。
-
-``` sh
-wget https://github.com/ContainX/docker-volume-netshare/releases/download/v0.36/docker-volume-netshare_0.36_linux_amd64.tar.gz
-```
-
-3. **すべてのワーカーノードで**上記ダウンロードしたバイナリを展開し`docker-volume-netshare`をパスの通るディレクトリに配置してください。配置したら`docker-volume-netshare`が使用できることを確認してください。以下例です。
-
-``` sh
-tar -zxvf docker-volume-netshare_0.36_linux_amd64.tar.gz
-mv docker-volume-netshare_0.36_linux_amd64/docker-volume-netshare /usr/local/sbin/
-docker-volume-netshare -h
-```
-
-4. **すべてのワーカーノードで**`docker-volume-netshare`をバックグランドで実行します。ターミナルセッションは残しおきます。このあとの複数の手順でワーカーノードの操作が発生します。
-
-``` sh
-docker-volume-netshare efs --noresolve &
-```
+本プラクティスでは使用しませんが、
+Dockerではプラグインをインストールすることでボリュームドライバを追加・拡張することが可能です。
+これにより外部ストレージシステム（各種クラウドのストレージサービスやNetAppなどのハードウェアベンダが展開するストレージ製品など）と連携することが可能です。
+ボリュームプラグインはさまざまなものが提供されています。
+一覧は[こちら](https://docs.docker.com/engine/extend/legacy_plugins/#volume-plugins)を参照してください。
 
 ## volumeマウントの実践
 
@@ -94,14 +73,12 @@ docker exec <container id> ls /data
 
 1. **すべてのワーカーノードで**dockerボリューム`test_efs`を削除してください。（[ヒント](https://docs.docker.com/engine/reference/commandline/volume_rm/)）
 
-2. **すべてのワーカーノードで**バックグラウンド実行していた`docker-volume-netshare`を停止してください。
-
-3. EFSを削除してください。
+2. EFSを削除してください。
 
 *[解答例](./.ans/swarm-volume.md)*
 
 ---
 
-[TOP](../README.md)   
+[TOP](../README.md)
 前: [シークレットの使用](./swarm-secret.md)  
 次: -  
