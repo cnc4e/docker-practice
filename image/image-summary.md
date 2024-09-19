@@ -33,7 +33,7 @@
 
 5. ``{ホストOS名}:5000/httpd:selfbuild``イメージのコンテナをバックグラウンドで起動してください。また、ホストOSの``80``ポートをコンテナの``80``ポートに繋いでください。
 
-6. ホストOSから``curl localhost:8080``で接続してください。``self build sita image de ugoitemasu``が表示されることを確認してください。
+6. ホストOSから``curl localhost:80``で接続してください。``self build sita image de ugoitemasu``が表示されることを確認してください。
 
 7. ``{ホストOS名}:5000/httpd:selfbuild``をプライベートイメージレジストリにpushしてください。
 
@@ -41,7 +41,7 @@
 
 8. もう一台のサーバで``{ホストOS名}:5000/httpd:selfbuild``イメージのコンテナをバックグラウンドで起動してください。また、もう一台のサーバの``80``ポートをコンテナの``80``ポートに繋いでください。
 
-9. もう一台のサーバから``curl localhost:8080``で接続してください。``self build sita image de ugoitemasu``が表示されることを確認してください。
+9. もう一台のサーバから``curl localhost:80``で接続してください。``self build sita image de ugoitemasu``が表示されることを確認してください。
 
 両方のサーバで実施してください。
 
