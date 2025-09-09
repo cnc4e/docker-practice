@@ -143,7 +143,7 @@ $ rm -f ~/host-dir/test.txt
 
 16. 以下コマンドの手順で確認する。
 ```
-$ docker exec -it 30bbdf7e1ed7 bash
+$ docker exec -it {docker psで確認したコンテナID} bash
 # ls container-dir/
 # 
 ```
