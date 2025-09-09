@@ -53,6 +53,109 @@
 
 このように、コンテナにボリュームをマウントさせればデータをコンテナのライフサイクルと切り離すことができます。
 
+<details>
+<summary>
+答え(一例です)
+</summary>
+
+1. 以下コマンドを実行する。
+```
+docker run -d centos:8 sh -c "sleep 3600"
+```
+
+2. 以下コマンドを実行する。
+```
+$ docker ps
+CONTAINER ID   IMAGE      COMMAND                CREATED          STATUS          PORTS     NAMES
+b47f4cbe7663   centos:8   "sh -c 'sleep 3600'"   44 seconds ago   Up 40 seconds             elastic_davinci
+$ docker exec -it {docker psで確認したコンテナID} bash
+# touch test.txt
+```
+
+3. 以下コマンドを実行する。
+```
+$ docker rm -f {docker psで確認したコンテナID}
+{docker psで確認したコンテナID}
+```
+
+4. 1.と同じコマンドを実行する。
+5. 以下コマンドの手順で確認する。
+```
+$ docker ps
+CONTAINER ID   IMAGE      COMMAND                CREATED         STATUS         PORTS     NAMES
+2c2d5243c77b   centos:8   "sh -c 'sleep 3600'"   7 seconds ago   Up 5 seconds             vibrant_bassi
+$ docker exec -it {docker psで確認したコンテナID} bash
+# ls
+bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+```
+
+6. 3.と同じコマンドを実行する。
+7. 以下コマンドを実行する。
+```
+mkdir ~/host-dir
+```
+
+8. 以下コマンドを実行する。ここで、`-v`コマンドはイメージよりも前で記述することに注意してください。
+```
+docker run -d -v ~/host-dir:/container-dir centos:8 sh -c "sleep 3600"
+```
+
+9. 以下コマンドの手順で確認する。
+```
+$ docker ps
+CONTAINER ID   IMAGE      COMMAND                CREATED         STATUS         PORTS     NAMES
+83b2395f89b1   centos:8   "sh -c 'sleep 3600'"   4 seconds ago   Up 3 seconds             charming_noether
+$ docker exec -it {docker psで確認したコンテナID} bash
+# ls
+bin  container-dir  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+```
+
+10. 以下コマンドを実行する。
+```
+# cd container-dir/
+# touch test.txt
+```
+
+11. 3.と同じコマンドを実行する。
+12. 8.と同じコマンドを実行する。
+13. 以下コマンドの手順で確認する。
+```
+$ docker ps
+CONTAINER ID   IMAGE      COMMAND                CREATED          STATUS          PORTS     NAMES
+30bbdf7e1ed7   centos:8   "sh -c 'sleep 3600'"   44 seconds ago   Up 43 seconds             hopeful_roentgen
+$ docker exec -it {docker psで確認したコンテナID} bash
+# ls container-dir/
+test.txt
+```
+
+14. 以下コマンドの手順で確認する。
+```
+# exit
+exit
+$ ls ~/host-dir/
+test.txt
+```
+
+15. 以下コマンドを実行する。
+```
+$ rm -f ~/host-dir/test.txt
+```
+
+16. 以下コマンドの手順で確認する。
+```
+$ docker exec -it {docker psで確認したコンテナID} bash
+# ls container-dir/
+# 
+```
+
+17. `exit`でコンテナから出た後、プラクティスの指示コマンドを実行してください。
+18. 以下コマンドを実行する。
+```
+$ rm -rf ~/host-dir/
+```
+
+</details>
+
 ---
 
 [TOP](../README.md)   
