@@ -15,12 +15,12 @@
 
 2. 以下コマンドでcentosのコンテナをバックグランドで実行します。コンテナの実行コマンドは``/bin/sh -c "sleep 1111"``を指定します。
    ``` sh
-   sudo docker run -d centos /bin/sh -c "sleep 11111"
+   sudo docker run -d centos:8 /bin/sh -c "sleep 11111"
    ```
 
 3. 以下コマンドでcentosのコンテナをバックグランドでもう1つ実行します。コンテナの実行コマンドは``/bin/sh -c "sleep 2222"``を指定します。
    ``` sh
-   sudo docker run -d centos /bin/sh -c "sleep 22222"
+   sudo docker run -d centos:8 /bin/sh -c "sleep 22222"
    ```
 
 4. 以下コマンドで動いているコンテナを確認します。centosイメージのコンテナが2つ動いているはずです。
@@ -56,7 +56,7 @@
    ps -ef | grep sleep | grep -v grep
    ```
 
-9. 上記確認したプロセスの親のさらに親のプロセスを以下のように確認します。親の親は``containerd``になっていると思います。
+9. 上記確認したプロセスの親のさらに親のプロセスを以下のように確認します。親の親は``containerd``になっていると思います。ここで、親プロセスは左から3番目のIDです。
    ``` sh
    ps -ef | grep {１つ目のプロセスの親プロセスID}
    ps -ef | grep {2つ目のプロセスの親プロセスID}
