@@ -54,7 +54,22 @@ $ docker rm -f {docker psで確認したコンテナID}
 {docker psで確認したコンテナID}
 ```
 
-4. 
+4. 以下コマンドを実行する。
+```
+docker run -d -e ENV=dev centos:8 sh -c "sleep 3600"
+```
+
+5. 以下コマンドを実行することで確認します。
+```
+$ docker ps
+CONTAINER ID   IMAGE      COMMAND                CREATED          STATUS          PORTS     NAMES
+b90896338ce1   centos:8   "sh -c 'sleep 3600'"   14 seconds ago   Up 13 seconds             confident_margulis
+$ docker exec -it {docker psで確認したコンテナID} bash
+# echo $ENV
+dev
+```
+
+6. プラクティスの指示コマンドを実行してください。
 
 </details>
 
