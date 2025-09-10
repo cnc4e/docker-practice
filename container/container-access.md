@@ -127,7 +127,6 @@ $ docker ps
 
 6. 以下コマンドを実行する。
 ```
-# exit
 $ curl localhost:8080
 <!DOCTYPE html>
 <html>
