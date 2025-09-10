@@ -10,7 +10,7 @@ VMの場合、ファイルシステムに保存したデータは再起動して
 
 1. 以下コマンドでコンテナを作成してください。
    ``` sh
-   sudo docker run -d centos /bin/sh -c "sleep 11111"
+   sudo docker run -d centos:8 /bin/sh -c "sleep 11111"
    ```
 
 2. 以下コマンドでコンテナが動いていることを確認してください。
@@ -49,7 +49,7 @@ VMの場合、ファイルシステムに保存したデータは再起動して
 
 8. 新しいコンテナを作成してください。
    ``` sh
-   sudo docker run -d centos /bin/sh -c "sleep 22222"
+   sudo docker run -d centos:8 /bin/sh -c "sleep 22222"
    ```
 
 9. 停止したコンテナを再起動してください。
