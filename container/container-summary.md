@@ -41,6 +41,44 @@
 
 しかし、毎回runのオプションでいろいろ設定するのは大変です。コンテナの数が増えるとさらに手間がかかります。これを解決するために``docker-compose``を使用します。docker-composeを使えばコンテナ起動のコマンドをファイルに記述し、何度でも同じ設定のコンテナを起動できます。（なお、プロダクション環境ではdocker-composeも使わず、KubernetesやECSなどのコンテナオーケストレーションを使うのが一般的です。）
 
+<details>
+<summary>
+答え(一例です)
+</summary>
+
+1. 以下コマンドを実行する。
+```
+$ mkdir ~/container-mount
+$ touch ~/container-mount/index.html
+$ echo docker run de iroiro sitei suruno taihen > ~/container-mount/index.html
+```
+
+2. 
+
+
+3. 以下コマンドを実行して確認してください。
+```
+$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                                   NAMES
+426281bae21c   nginx:1.19.2   "/docker-entrypoint.…"   9 seconds ago   Up 8 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp   vigilant_bartik
+```
+
+4. 以下コマンドを実行して確認してください。
+```
+$ curl localhost:8080
+docker run de iroiro sitei suruno taihen
+```
+
+5. 以下コマンドを実行して確認してください。
+```
+$ docker exec -it {docker psで確認したコンテナID} bash
+# echo $ENV
+docker-practice
+```
+
+
+</details>
+
 ---
 
 [TOP](../README.md)   
