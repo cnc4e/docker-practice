@@ -76,6 +76,8 @@ $ docker exec -it {docker psで確認したコンテナID} bash
 docker-practice
 ```
 
+6. 以下コマンドを実行して確認してください。
+
 
 </details>
 
