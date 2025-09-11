@@ -167,8 +167,16 @@ Sep 11 07:05:59 ip-10-0-10-220.ap-southeast-2.compute.internal 6390404c2fa2[2328
 Sep 11 07:09:20 ip-10-0-10-220.ap-southeast-2.compute.internal 6390404c2fa2[2328]: 172.17.0.1 - - [11/Sep/2025:07:09:20 +0000] "GET / HTTP/>
 ```
 
-15. 
+15. 以下コマンドを実行
+```
+$ sudo less /var/log/syslog
+または
+$ sudo less /var/log/messages
 
+なお、Amazon Linuxを使っている場合、デフォルトではjournalctlしか入っていません。そのため、以下コマンドで/var/log/messagesをインストールした後に13.節を再度実行してください。
+$ sudo yum update
+$ sudo yum install rsyslog
+```
 16. プラクティスの指示コマンドを実行してください。
 
 
