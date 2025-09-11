@@ -62,6 +62,223 @@
 
 また、ネットワークについて注意があります。隔離ネットワークはデフォルトで172.17.0.0/16のアドレス帯を使います。もし、ホストOSが属するアドレス帯や、通信先のアドレス帯がこのアドレス帯（172.17.0.0/16）とバッティングすると正しく通信できなくなる恐れがあります。なので、``172.17.0.0/16が使用可能か確認し、場合によっては隔離ネットワークのアドレス帯変更も検討``しましょう。
 
+<details>
+<summary>
+答え(一例です)
+</summary>
+
+1. 以下コマンドを実行する。
+```
+docker run -d nginx:1.19.2 /bin/sh -c "nginx && sleep 3600"
+```
+
+2. 以下コマンドを実行する。
+```
+$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS     NAMES
+add41ec4249c   nginx:1.19.2   "/docker-entrypoint.…"   7 seconds ago   Up 6 seconds   80/tcp    pensive_euler
+$ docker exec -it {docker psで確認したコンテナID} sh
+# curl localhost
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+3. 以下コマンドを実行する。
+```
+# exit
+$ curl localhost
+curl: (7) Failed to connect to localhost port 80 after 0 ms: Couldn't connect to server
+```
+
+4. 以下コマンドを実行する。
+```
+docker run -d -p 8080:80 nginx:1.19.2 /bin/sh -c "nginx && sleep 3600"
+```
+
+5. 以下コマンドを実行する。
+```
+$ docker ps
+5a21f22b37ac   nginx:1.19.2   "/docker-entrypoint.…"   43 seconds ago   Up 42 seconds   0.0.0.0:8080->80/tcp, :::8080->80/tcp   hungry_germain
+4e8e4cd44cf8   nginx:1.19.2   "/docker-entrypoint.…"   3 seconds ago    Up 2 seconds    80/tcp                                  sleepy_mcnulty
+```
+
+6. 以下コマンドを実行する。
+```
+$ curl localhost:8080
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+7. 以下コマンドを実行する。
+```
+$ docker run -d -p 8080:80 nginx:1.19.2 /bin/sh -c "nginx && sleep 3600"
+5c272637e17482d5b4f529364e1c3d30d5196c8017433d67778efe16a4996c8c
+docker: Error response from daemon: driver failed programming external connectivity on endpoint tender_kowalevski (4eab210ebc780d8051d8e31918b409fdc32a703f849667a9becadd2aedd5427f): Bind for 0.0.0.0:8080 failed: port is already allocated.
+```
+
+8. 以下コマンドを実行する。
+```
+$ docker run -d -p 8888:80 nginx:1.19.2 /bin/sh -c "nginx && sleep 3600"
+```
+
+9. 以下コマンドを実行する。
+```
+$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                   NAMES
+f99d10dd1ce5   nginx:1.19.2   "/docker-entrypoint.…"   46 seconds ago   Up 45 seconds   0.0.0.0:8888->80/tcp, :::8888->80/tcp   zealous_kepler
+4e8e4cd44cf8   nginx:1.19.2   "/docker-entrypoint.…"   5 minutes ago    Up 5 minutes    80/tcp                                  sleepy_mcnulty
+5a21f22b37ac   nginx:1.19.2   "/docker-entrypoint.…"   6 minutes ago    Up 6 minutes    0.0.0.0:8080->80/tcp, :::8080->80/tcp   hungry_germain
+```
+
+10. 以下コマンドを実行する。
+```
+$ curl localhost:8888
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+11. 以下コマンドを実行する。
+```
+$ curl {ホストOS IP}:8080
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+12. 以下コマンドを、それぞれのコンテナに対して実行する。
+```
+$ docker exec -it {docker psで確認したコンテナID} sh
+# echo "8080" >> /usr/share/nginx/html/index.html
+```
+
+13. プラクティスの指示に従ってコマンドを実行してください。
+14. 以下コマンドを実行する。
+```
+$ docker exec -it {docker psで確認した片方のコンテナID} sh
+# curl {13.で確認したもう片方のコンテナID}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+8080
+```
+
+15. プラクティスの指示に従ってコマンドを実行してください。
+
+</details>
+
 ---
 
 [TOP](../README.md)   
