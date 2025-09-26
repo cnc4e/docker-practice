@@ -60,6 +60,66 @@
 
 また、イメージレジストリがなくともイメージを手で配布することもできなくはないです。やり方は[イメージの手動運搬](./image-transport.md)で解説していますので興味のある方は見てください。
 
+<details>
+<summary>
+答え(一例です)
+</summary>
+
+1. 以下コマンドを実行する。
+```
+docker run -d -p 5000:5000 registry:2.7.1
+```
+
+2. 以下コマンドを実行する。
+```
+$ docker images
+REPOSITORY                                                   TAG               IMAGE ID       CREATED        SIZE
+nginx                                                        reproducibility   c57f52790069   3 days ago     133MB
+hashicorp/terraform-mcp-server                               latest            5dbf8d6350f2   4 weeks ago    10.8MB
+456247443832.dkr.ecr.ap-southeast-2.amazonaws.com/backend    latest            1cf72cc0df22   2 months ago   1.1GB
+backend                                                      v2                1cf72cc0df22   2 months ago   1.1GB
+456247443832.dkr.ecr.ap-southeast-2.amazonaws.com/frontend   latest            9ca1b9de7c3d   2 months ago   53MB
+frontend                                                     v2                9ca1b9de7c3d   2 months ago   53MB
+backend                                                      v1                b82d8430c71a   2 months ago   1.1GB
+456247443832.dkr.ecr.ap-southeast-2.amazonaws.com/backend    <none>            b82d8430c71a   2 months ago   1.1GB
+frontend                                                     v1                1df1a99e23e4   2 months ago   53MB
+456247443832.dkr.ecr.ap-southeast-2.amazonaws.com/frontend   <none>            1df1a99e23e4   2 months ago   53MB
+registry                                                     2.7.1             b8604a3fe854   3 years ago    26.2MB
+centos                                                       8                 5d0da3dc9764   3 years ago    231MB
+nginx                                                        1.19.2            7e4d58f0e5f3   5 years ago    133MB
+```
+
+3. 以下コマンドを実行する。
+```
+docker tag {docker imagesで確認したイメージ名}:{イメージタグ} {ホストOSのホスト名}:5000/testimage:v1
+```
+
+4. 以下コマンドを実行する(先ほど作成したイメージ以外は省略しています)。
+```
+$ docker images
+REPOSITORY                                                   TAG               IMAGE ID       CREATED        SIZE
+test:5000/testimage                                          v1                5d0da3dc9764   3 years ago    231MB
+```
+
+5. プラクティスの指示コマンドを実行してください。
+6. プラクティスの指示コマンドを実行してください。
+7. 以下コマンドを実行する。
+```
+docker push {ホストOSのホスト名}:5000/testimage:v1
+```
+8. プラクティスの指示コマンドを実行して確認してください。
+9. プラクティスの指示コマンドを実行してください。接続できなかった場合、5.～6.節の操作を別マシンで実施してみてください。
+10. 以下コマンドを実行する。
+```
+$ docker images
+REPOSITORY                                                      TAG       IMAGE ID       CREATED       SIZE
+{ホストOSのホスト名}:5000/testimage   v1        5d0da3dc9764   4 years ago   231MB
+```
+
+11. プラクティスの指示コマンドを実行してください。
+
+</details>
+
 ---
 
 [TOP](../README.md)   
