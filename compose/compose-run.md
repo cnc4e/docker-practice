@@ -3,6 +3,8 @@
 次: [docker-composeによるネットワーク作成](./compose-network.md)  
 
 ---
+# docker-composeコマンドの注意
+docker composeにはv1とv2があります。v1とv2では実行コマンドが異なり、v1は`docker-compose`で、v2は`docker compose`と、ハイフンを入れるかどうかの違いがあります。これらの動作に大きな違いはありませんが、互換性がないため、v2を入れた状態で`docker-compose`を実行してもエラーとなります。本演習では`docker-compose`を使うようにしていますので、自身の環境に応じて`docker compose`にて実行するようにしてください。
 
 # docker-composeによるコンテナ起動
 
@@ -64,6 +66,86 @@ docker-composeはコンテナ起動の設定をファイルに定義し、定義
 12. ホストOSからlocalhost:8080に対してcurlを実行してください。``compose de mount simasita``と表示れるはずです。
 
 13. docker-composeでコンテナを削除してください。
+
+14. `~/compose-mount`を削除してください。
+
+15. `docker-compose.yml`を削除してください。
+
+<details>
+<summary>
+答え(一例です)
+</summary>
+docker compose
+
+
+1. プラクティスの指示コマンドを実行してください。
+2. 以下コマンドを実行する。
+```
+docker-compose up -d
+```
+
+3. 以下コマンドを実行して確認してください。
+```
+$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                                   NAMES
+6a6bcd7a538a   nginx:1.19.2   "/docker-entrypoint.…"   6 minutes ago   Up 6 minutes   0.0.0.0:8080->80/tcp, :::8080->80/tcp   docker-practice-web-1
+```
+
+4. 以下コマンドを実行する。
+```
+curl localhost:8080
+```
+
+5. プラクティスの指示コマンドを実行して確認してください。
+6. プラクティスの指示コマンドを実行して確認してください。
+7. 以下コマンドを実行する。
+```
+docker-compose down
+```
+
+8. 以下コマンドを実行する。
+```
+mkdir ~/compose-mount
+```
+
+9. 以下コマンドを実行した後、プラクティスの指示コマンドを実行してください。
+```
+cd ~/compose-mount
+```
+
+10. 以下のように`docker-compose.yml`を修正してください。
+```
+version: '3'
+services:
+  web:
+    image: nginx:1.19.2
+    ports:
+      - 8080:80
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+    environment:
+      ENV: test
+    volumes:  #追加
+      - ~/compose-mount:/usr/share/nginx/html #追加
+```
+
+11. 2.と同じコマンドを実行する。
+12. 4.と同じコマンドを実行して確認してください。
+13. 7.と同じコマンドを実行する。
+14. 以下コマンドを実行する。
+```
+rm -rf ~/compose-mount
+```
+
+15. 以下コマンドを実行する。
+```
+rm docker-compose.yml
+```
+
+</details>
 
 ---
 
