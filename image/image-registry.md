@@ -26,7 +26,7 @@
 
 5. 以下のように``/etc/docker/daemon.json``を作成します。（権限で書き込めない場合はviなどで作成してください。）
    ``` sh
-   echo {"insecure-registries": ["{ホストOSのホスト名}:5000"]} > /etc/docker/daemon.json
+   echo '{"insecure-registries": ["{ホストOSのホスト名}:5000"]}' > /etc/docker/daemon.json
    ```
 
 6. dockerを再起動します。
